@@ -1,38 +1,156 @@
-.App {
+html,
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  
+}
+
+
+a {
+  color: #916525;
+}
+h4 {
   text-align: center;
+  color: inherit;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.image{
+  margin: 0 auto -70px;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
+.top {
+  height: 50px;
+  border-radius: 100px;
+  margin-top: 50px;
+}
+.bottom {
+  height: 50px;
+  border-radius: 100px;
+  margin-top: 50px;
+}
+.img-fluid {
+  height: 60px;
+  /* border-radius: 100px; */
+  /* margin: -2px 300px 40px; */
+}
+
+.formTwo {
+  /* box-shadow: 370px 0px 1px #9c551a; */
+  position: relative;
+  left: 0;
+  background-image: url("./images/icon.png");
+  background-repeat: no-repeat;
+  width: fit-content;
+  -webkit-transition: opacity 1s ease-in-out;
+  -moz-transition: opacity 1s ease-in-out;
+  -o-transition: opacity 1s ease-in-out;
+  transition: opacity 1s ease-in-out;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+  border: outset 0 0;
+  -webkit-text-fill-color: #827717;
+  /* -webkit-box-shadow: 1px 0px 10px 0  #827717 inset; */
+  transition: background-color 5000s ease-in-out 0s;
+}
+
+.formOne {
+  /* box-shadow: 370px 0px 1px #9c551a; */
+  background-image: url("./images/garage.jpg");
+  background-repeat: no-repeat;
+  width: fit-content;
+}
+.form {
+  align-items: stretch;
+}
+#button:focus {
+  outline: none;
+  /* background: none; */
+}
+#label {
+  color: #827717;
+}
+#select {
+  background-image: url("./images/down.jpg");
+}
+#gmail {
+  background-image: url("./images/gmail.png");
+  background-repeat: no-repeat;
+  /* height: fit-content; */
+}
+
+#cf {
+  position: relative;
+  /* height:281px; */
+  width: fit-content;
+  margin: 0 auto;
+}
+
+#col {
+  margin: 0 auto 0 auto;
+}
+#cf img {
+  position: absolute;
+  left: 0;
+  -webkit-transition: opacity 1s ease-in-out;
+  -moz-transition: opacity 1s ease-in-out;
+  -o-transition: opacity 1s ease-in-out;
+  transition: opacity 1s ease-in-out;
+}
+
+@keyframes cf3FadeInOut {
+  0% {
+    opacity: 1;
+  }
+  45% {
+    opacity: 1;
+  }
+  55% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 0;
   }
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+
+
+#cf img.top {
+  animation-name: cf3FadeInOut;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+  animation-duration: 10s;
+  animation-direction: alternate;
+}
+/* @media all and (max-width: 400px) {  
+  .container > li {  
+    flex-basis: 100%;  
+  }  
+  
+} */
+.bar-logo {
+  width: 10vh;
+  height: 7vh;
+}
+.attendant {
+  height: fit-content;
+  margin: 0;
+  margin-bottom: 0;
 }
 
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+#panel {
+  background-color: black;
+  color: black;
 }
