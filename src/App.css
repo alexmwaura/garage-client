@@ -8,7 +8,9 @@ body {
   -moz-osx-font-smoothing: grayscale;
   
 }
-
+.table-header th {
+  color: #916525 !important
+}
 
 a {
   color: #916525;
@@ -37,7 +39,9 @@ h4 {
   /* border-radius: 100px; */
   /* margin: -2px 300px 40px; */
 }
-
+/* .card-header{
+  background-color: #916525;
+} */
 .formTwo {
   /* box-shadow: 370px 0px 1px #9c551a; */
   position: relative;
@@ -79,6 +83,11 @@ select:-webkit-autofill:focus {
   outline: none;
   /* background: none; */
 }
+#add {
+  outline: none;
+  /* background: none; */
+}
+
 #label {
   color: #827717;
 }
