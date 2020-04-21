@@ -4076,7 +4076,8 @@ Created using IcoMoon - icomoon.io
 
 .sidebar[data-color="green"]:after,
 .off-canvas-sidebar[data-color="green"]:after {
-  background: #915f14;
+  background: -webkit-gradient(linear, left top, right top, from(#0c2646), color-stop(60%, #204065), to(#2a5788));
+  background: linear-gradient(to right, #14140f 0%, #2b1b05 60%, #422d0d 100%);
 }
 
 .sidebar[data-color="blue"] .nav li.active>a:not([data-toggle="collapse"]),
@@ -4628,7 +4629,9 @@ Created using IcoMoon - icomoon.io
 }
 
 .card .card-header:not([data-background-color]) {
-  background-color: transparent;
+  background: -webkit-gradient(linear, left top, right top, from(#0c2646), color-stop(60%, #204065), to(#2a5788));
+  background: linear-gradient(to right, #14140f 0%, #412a0a 60%, #915f14 100%);
+  color: #fff;
 }
 
 .card .card-header .card-title {
