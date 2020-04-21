@@ -11,3 +11,5 @@ export const CLEAR_ERRORS = 'CLEAR_ERRORS';
 export const LOADING_DATA = 'LOADING_DATA';
 export const STOP_LOADING_UI = 'STOP_LOADING_UI';
 // Data reducer types
+export const SET_CUSTOMER = 'SET_CUSTOMER'
+export const NEW_VEHICLE = 'NEW_VEHICLE';

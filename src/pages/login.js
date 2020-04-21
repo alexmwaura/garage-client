@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import withStyles from "@material-ui/core/styles/withStyles";
 import PropTypes from "prop-types";
-import AppIcon from "../images/calltronix.jpg";
-import DownIcon from "../images/down.jpg";
+import AppIcon from "../images/more.jpg";
+import DownIcon from "../images/calltronix.jpg";
 import ImageIcon from "../images/more.jpg";
 
 // import GarageIcon from "../images/garage.jpg";
@@ -49,7 +49,6 @@ class login extends Component {
 
     this.props.loginUser(userData, this.props.history);
   };
-  datadata;
   handleChange = (event) => {
     this.setState({
       [event.target.name]: event.target.value,
@@ -152,12 +151,7 @@ class login extends Component {
                             </Link>
                           </small>
                           <br />
-                          <img
-                            src={AppIcon}
-                            alt="calltronix"
-                            // className="icon "
-                            className="img-fluid"
-                          />
+                        
                         </form>
                       </Grid>
                     </Grid>

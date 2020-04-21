@@ -2,7 +2,7 @@ export default {
   palette: {
     primary: {
       light: "#33c9dc",
-      main: "#827717",
+      main: "#422d0d",
       dark: "#ff9800",
       contrastText: "#fff",
     },
@@ -18,9 +18,16 @@ export default {
     textField: {
       margin: "10px auto 10px auto",
     },
+    textFieldCustomer: {
+      margin: "10px 10px 10px auto"
+    },
     button: {
       marginTop: 20,
       position: "relative",
+    },
+    customerAdd: {
+      marginTop: 30,
+      position: "fixed",
     },
     typography: {
       useNextVariants: true
@@ -67,7 +74,7 @@ export default {
     formControl: {
       margin: 1,
       minWidth: 120,
-    },
+    }
   },
 
 };

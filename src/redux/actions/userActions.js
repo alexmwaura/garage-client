@@ -3,8 +3,10 @@ import {
   SET_ERRORS,
   CLEAR_ERRORS,
   LOADING_UI,
-  // SET_UNAUTHENTICATED,
+  SET_UNAUTHENTICATED,
   LOADING_USER,
+  NEW_VEHICLE,
+  LOADING_DATA,
   // MARK_NOTIFICATIONS_READ
 } from "../types";
 import Attendant from "../../pages/attendant";
@@ -29,10 +31,10 @@ export const loginUser = (userData, history) => (dispatch) => {
       if (account === "attendant") {
         const { username } = res.data;
         localStorage.setItem("username", username);
-         history.push("/attendant");
-         window.location.reload();
+        history.push("/attendant");
+        window.location.reload();
 
-        const  getUser = localStorage.username
+        const getUser = localStorage.username;
         await dispatch(getAttendantData(getUser));
       }
     })
@@ -70,6 +72,14 @@ export const signupUser = (newUserData, history) => (dispatch) => {
     });
 };
 
+export const logoutUser = () => (dispatch) => {
+  localStorage.removeItem("FBIdToken");
+  localStorage.removeItem("username");
+  delete axios.defaults.headers.common["Authorization"];
+  dispatch({ type: SET_UNAUTHENTICATED });
+  window.location.reload();
+};
+
 export const getAttendantData = (username) => (dispatch) => {
   dispatch({ type: LOADING_USER });
   axios
@@ -79,7 +89,8 @@ export const getAttendantData = (username) => (dispatch) => {
         type: SET_USER,
         payload: res.data,
       });
-      console.log(res.data);
+      // console.log(res.data);
     })
     .catch((err) => console.log(err));
 };
+

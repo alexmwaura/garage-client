@@ -1,10 +1,13 @@
-import { SET_ALL_CUSTOMERS, LOADING_DATA } from "../types";
+import { SET_ALL_CUSTOMERS, LOADING_DATA, NEW_VEHICLE,SET_CUSTOMER } from "../types";
+
 const initialState = {
   customers: [],
+  customer:{},
+  vehicle: {},
   loading: false,
 };
 export default function (state = initialState, action) {
-  switch (action.type) {
+  switch (action.type) {                                                                                                                                                                              
     case LOADING_DATA:
       return {
         ...state,
@@ -16,6 +19,20 @@ export default function (state = initialState, action) {
         customers: action.payload,
         loading: false,
       };
+
+    case NEW_VEHICLE:
+      return {
+        ...state,
+        vehicle: action.payload,
+        loading: false,                                      
+       
+      }
+    case SET_CUSTOMER:
+      return {
+        ...state,
+        customer: action.payload,
+        loading: false,
+      }    
     default:
       return state;
   }

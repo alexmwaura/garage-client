@@ -5,8 +5,8 @@ import createMuiTheme from "@material-ui/core/styles/createMuiTheme";
 import themeObject from "./util/theme";
 import { Provider } from "react-redux";
 import store from "./redux/store";
-import Navbar from "./components/nav";
-import ExtraNav from "./components/extraNav";
+import Navbar from "./components/navigation/nav";
+import ExtraNav from "./components/navigation/extraNav";
 import AuthRoute from "./util/AuthRoute";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import signup from "./pages/signup";
@@ -15,9 +15,9 @@ import attendant from "./pages/attendant";
 import axios from "axios";
 import jwtDecode from "jwt-decode";
 import { SET_AUTHENTICATED } from "./redux/types";
-import profile from "./components/userProfile";
+import profile from "./components/attendant/myCustomers";
 
-import { getAttendantData } from "./redux/actions/userActions";
+import { getAttendantData,logoutUser } from "./redux/actions/userActions";
 
 import { makeStyles } from "@material-ui/core/styles";
 // import Paper from "@material-ui/core/Paper";
@@ -47,7 +47,7 @@ class App extends Component {
       const decodedToken = jwtDecode(token);
       if (decodedToken.exp * 1000 < Date.now()) {
         localStorage.clear();
-        // store.dispatch(logoutUser());
+        store.dispatch(logoutUser());
         window.location.href = "/";
       } else {
         store.dispatch({ type: SET_AUTHENTICATED });

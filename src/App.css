@@ -87,6 +87,23 @@ select:-webkit-autofill:focus {
   outline: none;
   /* background: none; */
 }
+.common-table{
+  flex: 1;
+  overflow: auto;
+}
+
+.dialog{
+  opacity: 9;
+  overflow: inherit;
+}
+.dialog-body{
+  margin: 0;
+  background-color: #422d0d;
+  background-image: url('./images/tire.jpg');
+  background-repeat: no-repeat;
+  height: fit-content;
+  overflow: auto;
+}
 
 #label {
   color: #827717;
@@ -134,7 +151,11 @@ select:-webkit-autofill:focus {
   }
 }
 
-
+.dialog{
+  display: outside;
+  
+  
+}
 
 #cf img.top {
   animation-name: cf3FadeInOut;

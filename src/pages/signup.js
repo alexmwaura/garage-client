@@ -1,8 +1,7 @@
 import React, { Component } from "react";
 import withStyles from "@material-ui/core/styles/withStyles";
 import PropTypes from "prop-types";
-import AppIcon from "../images/calltronix.jpg";
-import DownIcon from "../images/down.jpg";
+import DownIcon from "../images/calltronix.jpg";
 
 import ImageIcon from "../images/more.jpg";
 import MenuItem from "@material-ui/core/MenuItem";
@@ -230,11 +229,7 @@ class signup extends Component {
                               <Link to="/login">here</Link>
                             </small>
                             <br />
-                            <img
-                              src={AppIcon}
-                              alt="calltronix"
-                              className="img-fluid"
-                            />
+                           
                           </form>
                         </Grid>
                       </Grid>

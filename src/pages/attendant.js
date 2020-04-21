@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import withStyles from "@material-ui/core/styles/withStyles";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import Customers from "../components/customers";
+import Customers from "../components/attendant/customers";
 
 
 
@@ -13,16 +13,12 @@ const styles = (theme) => ({
 
 
 class attendant extends Component {
-  // componentDidMount() {
-  //   this.props.getAttendantData(this.props.user.username);
-  // }
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.user.credentials) {
       this.setState({ ...nextProps.user.credentials });
 
       const { customers } = nextProps.user.credentials;
-      // console.log(customers);
     }
   }
 
