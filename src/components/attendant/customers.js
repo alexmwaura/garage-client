@@ -8,6 +8,7 @@ import { getAllCustomers } from "../../redux/actions/dataActions";
 import Table from "../ui/table";
 import Loader from "../ui/loader";
 import Alert from '@material-ui/lab/Alert';
+import SearchForm from '../../components/ui/search'
 
 
 export class customers extends Component {
@@ -39,12 +40,15 @@ export class customers extends Component {
     const customerData = this.props.data.customers;
     const loading = this.props.data.loading;
     let customerMarkup = !loading ? (
-      <Table customers={customerData} />
+      <Fragment>
+      <SearchForm customers={customerData} />
+      </Fragment>
+      
     ) : (
       <Loader />
     );
     const {authenticated}= this.props.user  
-    // console.log(authenticated)
+
     return (
       <div className="main-panel" id="main-panel">
         <div className="panel-header panel-header-sm"></div>
@@ -60,7 +64,16 @@ export class customers extends Component {
                   <div className="table-responsive">
                     
                     
-                   {authenticated? (<Fragment> {customerMarkup}</Fragment>):(
+                   {authenticated? (
+                   <div className="container">
+                     <Fragment>
+                    
+                      {customerMarkup}
+                      
+                      </Fragment>
+                   </div>
+                      
+                      ):(
                      <Fragment><Alert severity="warning" >This is to notify — Please Login!</Alert></Fragment>
                    )}
                     
