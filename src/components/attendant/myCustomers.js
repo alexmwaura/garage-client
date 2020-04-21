@@ -5,6 +5,7 @@ import { getAttendantData } from "../../redux/actions/userActions";
 import Table from "../ui/table";
 import Loader from "../ui/loader";
 import Alert from "@material-ui/lab/Alert";
+import CustomerForm from "../ui/customerForm";
 
 class userProfile extends Component {
   constructor() {
@@ -29,17 +30,15 @@ class userProfile extends Component {
 
   componentDidMount() {
     this.props.getAttendantData(this.props.user.username);
-    
-
   }
 
   render() {
-    const customerData = this.props.user.credentials.customers;
-    // console.log(customerData);
+    const { username, customers } = this.props.user.credentials;
+    console.log(customers);
     const loading = this.props.user.loading;
     // console.log(loading)
     let customerMarkup = !loading ? (
-      <Table customers={customerData} />
+      <Table customers={customers} />
     ) : (
       <Loader />
     );
@@ -58,7 +57,30 @@ class userProfile extends Component {
                 <div className="card-body">
                   <div className="table-responsive">
                     {authenticated ? (
-                      <Fragment> {customerMarkup}</Fragment>
+                      <Fragment>
+                        {customers ? (
+                          <Fragment>
+                            {customers.length > 0 ? (
+                              <Fragment>{customerMarkup}</Fragment>
+                            ) : (
+                            <Fragment>
+                                <Alert severity="info">
+                                {username} ! You have no customers — Please Add
+                               
+                              </Alert>
+                               <CustomerForm
+                               newCustomer={this.props.newCustomer}
+                             />
+                             <br />
+                            </Fragment>
+                            )}
+                          </Fragment>
+                        ) : (
+                          <Fragment>
+                            <Loader />
+                          </Fragment>
+                        )}
+                      </Fragment>
                     ) : (
                       <Fragment>
                         <Alert severity="warning">
