@@ -1,4 +1,4 @@
-import React, { Component,Fragment } from "react";
+import React, { Component, Fragment } from "react";
 import { addVehicle } from "../../redux/actions/dataActions";
 import PropTypes from "prop-types";
 import withStyles from "@material-ui/core/styles/withStyles";
@@ -9,7 +9,8 @@ import Button from "@material-ui/core/Button";
 import { connect } from "react-redux";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import Box from "@material-ui/core/Box";
-import Alert from '@material-ui/lab/Alert';
+import Alert from "@material-ui/lab/Alert";
+import NotificationDialog from './notificationDialog'
 
 const styles = (theme) => ({
   ...theme.spreadThese,
@@ -19,27 +20,23 @@ class Vehicle extends Component {
   constructor() {
     super();
     this.state = {
-      
       registration: "",
       model: "",
       engine: "",
       errors: {},
       loading: false,
-     
+      vehicle: {}
     };
   }
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.UI.errors) {
-      this.setState({ errors: nextProps.UI.errors,
-      loading: false,
-      });
+      this.setState({ errors: nextProps.UI.errors, loading: false });
     }
-    this.setState({loading: false})
-   
+    if (nextProps.data.vehicle) {
+      this.setState({ loading: false, vehicle: nextProps.data.vehicle });
+    }
   }
-
-  
 
   handleSubmit = (event) => {
     event.preventDefault();
@@ -52,7 +49,12 @@ class Vehicle extends Component {
       registration: this.state.registration,
       engine: this.state.engine,
     };
-    this.props.addVehicle(vehicleData, this.props.customerId, this.props.attendant,this.props.name);
+    this.props.addVehicle(
+      vehicleData,
+      this.props.customerId,
+      this.props.attendant,
+      this.props.name
+    );
   };
 
   handleChange = (event) => {
@@ -61,123 +63,127 @@ class Vehicle extends Component {
     });
   };
 
-
-
-
   render() {
     const {
       classes,
       // UI: { loading },
-      name,
-     
+      customerId, attendant,name,email
     } = this.props;
-    const {customer} = this.props.data
+    const { customer } = this.props.data;
     const errors = this.state.errors;
-    const {vehicleCount} = customer
-    const successMessage = () => {
-     
-       return(
-        <Fragment><Alert severity="warning" >This is to notify — Please Login!</Alert></Fragment>
-       )
-     
-    }
+    const { vehicleCount } = customer;
+    const {vehicle} = this.state
+    return (
+      <Fragment>
+        {vehicleCount > this.props.vehicleCount ? (
+          <Fragment>
+            <Alert severity="success">
+              Successfully — Added {vehicle.model} for {name}{" "}
+            </Alert>
+
+            <NotificationDialog
+                          customerId={customerId}
+                          attendant={attendant}
+                          openDialog={this.props.openDialog}
+                          name={name}
+                          // createdAt={createdAt}
+                          vehicleCount={vehicleCount}
+                          email={email}
+            />
 
 
-    return (    
-     <Fragment>
-       {vehicleCount >  this.props.vehicleCount ? ( <Fragment><Alert severity="success" >Success — Added vehicle for {name} </Alert></Fragment>):( 
-      <form onSubmit={this.handleSubmit} className={classes.form}>
-      <Grid>
-        <Grid item container direction="row">
-        <Grid item xs={12} sm={4}>
-        <Box p={1} m={1} bgcolor="background.paper">
-          <TextField
-            id="model"
-            name="model"
-            type="text"
-            label="Model"
-            className={classes.textField}
-            value={this.state.model}
-            onChange={this.handleChange}
-            helperText={errors.model}
-            error={errors.model ? true : false}
-            // variant="outlined"
-          />
-        </Box>
-      </Grid>
-      <Grid item xs={12} sm={4}>
-        <Box p={1} m={1} bgcolor="background.paper">
-          <TextField
-            id="registration"
-            name="registration"
-            type="registration"
-            label="Registration"
-            className={classes.textField}
-            value={this.state.registration}
-            onChange={this.handleChange}
-            helperText={errors.registration}
-            error={errors.registration ? true : false}
+          </Fragment>
+        ) : (
+          <form onSubmit={this.handleSubmit} className={classes.form}>
+            <Grid>
+              <Grid item container direction="row">
+                <Grid item xs={12} sm={4}>
+                  <Box p={1} m={1} bgcolor="background.paper">
+                    <TextField
+                      id="model"
+                      name="model"
+                      type="text"
+                      label="Model"
+                      className={classes.textField}
+                      value={this.state.model}
+                      onChange={this.handleChange}
+                      helperText={errors.model}
+                      error={errors.model ? true : false}
+                      // variant="outlined"
+                    />
+                  </Box>
+                </Grid>
+                <Grid item xs={12} sm={4}>
+                  <Box p={1} m={1} bgcolor="background.paper">
+                    <TextField
+                      id="registration"
+                      name="registration"
+                      type="registration"
+                      label="Registration"
+                      className={classes.textField}
+                      value={this.state.registration}
+                      onChange={this.handleChange}
+                      helperText={errors.registration}
+                      error={errors.registration ? true : false}
 
-            // variant="outlined"
-          />
-        </Box>
-      </Grid>
+                      // variant="outlined"
+                    />
+                  </Box>
+                </Grid>
 
-      <Grid item xs={12} sm={4}>
-        <Box p={1} m={1} bgcolor="background.paper">
-          <TextField
-            id="engine"
-            name="engine"
-            type="engine"
-            label="Engine"
-            className={classes.textField}
-            value={this.state.engine}
-            onChange={this.handleChange}
-            helperText={errors.engine}
-            error={errors.engine ? true : false}
+                <Grid item xs={12} sm={4}>
+                  <Box p={1} m={1} bgcolor="background.paper">
+                    <TextField
+                      id="engine"
+                      name="engine"
+                      type="engine"
+                      label="Engine"
+                      className={classes.textField}
+                      value={this.state.engine}
+                      onChange={this.handleChange}
+                      helperText={errors.engine}
+                      error={errors.engine ? true : false}
 
-            // variant="outlined"
-          />
-        </Box>
-      </Grid>
+                      // variant="outlined"
+                    />
+                  </Box>
+                </Grid>
 
-      <br />
-      {errors.general && (
-        <Typography variant="body2" className={classes.customError}>
-          {errors.general}
-        </Typography>
-      )}
-       <Grid item sm={12}>
-     <Box p={1} m={1} bgcolor="background.paper">
-       
-        <Button
-        // variant="outlined"
-        type="submit"
-        variant="contained"
-        id="button"
-        color="primary"
-        className={classes.button}
-        disabled={this.state.loading}
-      >
-        Add Vehicle
-        {this.state.loading && (
-          <CircularProgress
-            size={30}
-            className={classes.progress}
-            // className="secondary"
-            disableShrink
-          />
+                <br />
+                {errors.general && (
+                  <Typography variant="body2" className={classes.customError}>
+                    {errors.general}
+                  </Typography>
+                )}
+                <Grid item sm={12}>
+                  <Box p={1} m={1} bgcolor="background.paper">
+                    <Button
+                      // variant="outlined"
+                      type="submit"
+                      variant="contained"
+                      id="button"
+                      color="primary"
+                      className={classes.button}
+                      disabled={this.state.loading}
+                    >
+                      Add Vehicle
+                      {this.state.loading && (
+                        <CircularProgress
+                          size={30}
+                          className={classes.progress}
+                          // className="secondary"
+                          disableShrink
+                        />
+                      )}
+                    </Button>
+                  </Box>
+                </Grid>
+              </Grid>
+            </Grid>
+          </form>
         )}
-      </Button>
-        
-     </Box>
-     </Grid>
-        </Grid>
-      </Grid>
-    </form>)}
-     </Fragment> 
-     
-    )
+      </Fragment>
+    );
   }
 }
 
