@@ -11,15 +11,17 @@ import Icon from "@material-ui/core/Icon";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 import Grid from "@material-ui/core/Grid";
-import CheckIcon from '@material-ui/icons/Check';
+import CheckIcon from "@material-ui/icons/Check";
+import { addCustomer } from "../../redux/actions/dataActions";
+import Typography from "@material-ui/core/Typography";
 
 const styles = (theme) => ({
   ...theme.spreadThese,
   root: {
-    width: '100%',
+    width: "100%",
     marginTop: theme.spacing(3),
-    overflowX: 'auto',
-    textAlign: 'center'
+    overflowX: "auto",
+    textAlign: "center",
   },
   table: {
     minWidth: 100,
@@ -30,10 +32,18 @@ class customerForm extends Component {
   state = {
     open: "none",
     disabled: false,
+    loading: false,
     name: "",
     email: "",
     phone: "",
+    errors: {},
   };
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.UI.errors) {
+      this.setState({ errors: nextProps.UI.errors, loading: false });
+    }
+  }
 
   componentDidMount = () => {
     if (this.props.newCustomer) {
@@ -71,20 +81,32 @@ class customerForm extends Component {
     this.setState({
       loading: true,
     });
-    const userData = {
+    const customerData = {
       email: this.state.email,
       name: this.state.name,
       phone: this.state.phone,
     };
 
-    console.log(userData);
+    const { userId } = this.props.user.credentials;
+    this.props.addCustomer(customerData, userId);
   };
 
   render() {
-    const { classes } = this.props;
+    const { classes, handleSearch, value } = this.props;
+    const { errors, loading } = this.state;
+
+    // const handleSearch={this.handleSearch}
+    // value={this.searchValue}
+    // console.log(errors)
+    // const {userId} = user.credentials
 
     return (
-      <form className={classes.form} noValidate onSubmit={this.handleSubmit}>
+      <form
+        className={classes.form}
+        noValidate
+        onSubmit={this.handleSubmit}
+        id="add"
+      >
         <Box
           display="inline"
           //   p={1}
@@ -104,17 +126,18 @@ class customerForm extends Component {
             </Icon>{" "}
           </IconButton>
         </Box>
-
         <Box
           display={this.state.open}
           //   p={1}
           //   m={1}
           bgcolor="background.paper"
         >
-          <IconButton onClick={this.handleClose} id="button" color="secondary"
-          title="Close"
-          aria-label="close"
-          
+          <IconButton
+            onClick={this.handleClose}
+            id="button"
+            color="secondary"
+            title="Close"
+            aria-label="close"
           >
             <CloseIcon />
           </IconButton>
@@ -127,11 +150,11 @@ class customerForm extends Component {
             color="secondary"
             title="Save"
             aria-label="save"
+            onSubmit={this.handleSubmit}
             // className={classes.button}
-            // disabled={loading}
+            disabled={loading}
           >
             <CheckIcon />
-
           </IconButton>
         </Box>
         <Grid>
@@ -145,13 +168,15 @@ class customerForm extends Component {
               >
                 <TextField
                   autoFocus
-                  margin="dense"
+                  // margin="dense"
                   id="name"
                   name="name"
                   label="Full Names"
                   type="text"
                   className={classes.textField}
                   onChange={this.handleOnChange}
+                  helperText={errors.name}
+                  error={errors.name ? true : false}
                 />
               </Box>
             </Grid>
@@ -163,16 +188,17 @@ class customerForm extends Component {
                 display={this.state.open}
               >
                 <TextField
-                  margin="dense"
+                  // margin="dense"
                   id="email"
                   email="email"
                   name="email"
                   label="Email Address"
                   type="email"
+                  helperText={errors.email}
+                  error={errors.email ? true : false}
                   value={this.state.email}
                   className={classes.textField}
                   onChange={this.handleOnChange}
-                  
                 />
               </Box>
             </Grid>
@@ -180,12 +206,14 @@ class customerForm extends Component {
             <Grid item xs={12} sm={4}>
               <Box
                 display={this.state.open}
-                p={1}
+                // p={1}
                 m={10}
                 bgcolor="background.paper"
               >
-                
                 <PhoneInput
+                  // containerStyle={{margin: 0}}
+                  // containerStyle={{marginRight: '2000%'}}
+                  // containerClass
                   placeholder="Phone Number"
                   country={"ke"}
                   inputProps={{
@@ -196,6 +224,11 @@ class customerForm extends Component {
                   onChange={(phone) => this.setState({ phone })}
                   value={this.state.phone}
                 />
+                {errors.phone && (
+                  <Typography variant="body2" className={classes.customError}>
+                    {errors.phone}
+                  </Typography>
+                )}
               </Box>
             </Grid>
           </Grid>
@@ -221,6 +254,7 @@ const mapStateToProps = (state) => ({
 
 const mapActionsToProps = {
   // getScream,
+  addCustomer,
   clearErrors,
 };
 
