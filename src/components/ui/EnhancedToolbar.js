@@ -1,29 +1,12 @@
-import React, { Component } from 'react';
-import { render } from 'react-dom';
-// import Hello from './Hello';
-// import './style.css';
-import classNames from 'classnames';
-import PropTypes from 'prop-types';
-import { withStyles, createStyles } from '@material-ui/styles';
-import keycode from 'keycode';
-import Table from "@material-ui/core/Table";
-import TableBody from "@material-ui/core/TableBody";
-import TableCell from "@material-ui/core/TableCell";
-import TableHead from "@material-ui/core/TableHead";
-import TableRow from "@material-ui/core/TableRow";
-import { connect } from "react-redux";
+import React, { Component } from "react";
+import { render } from "react-dom";
+import PropTypes from "prop-types";
+import withStyles from "@material-ui/styles/withStyles";
+import TextField from "@material-ui/core/TextField";
+import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
-import TablePagination from "@material-ui/core/TablePagination";
-import TableContainer from "@material-ui/core/TableContainer";
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
-import Paper from '@material-ui/core/Paper';
-import Checkbox from '@material-ui/core/Checkbox';
-import IconButton from '@material-ui/core/IconButton';
-import DeleteIcon from '@material-ui/icons/Delete';
-import FilterListIcon from '@material-ui/icons/FilterList';
-import TextField from '@material-ui/core/TextField';
-import TableSortLabel from '@material-ui/core/TableSortLabel'
+import { connect } from "react-redux";
+import CustomerForm from './customerForm'
 
 const styles = (theme) => ({
   ...theme.spreadThese,
@@ -38,44 +21,72 @@ const styles = (theme) => ({
     flex: 0,
   },
   actions: {
-    marginLeft: 'auto'
+    marginLeft: "auto",
   },
   title: {
-    flex: '0 0 auto',
+    flex: "0 0 auto",
   },
 });
 
-const EnhancedTableToolbar = props => {
-const { numSelected, classes, value, handleSearch} = props;
+const EnhancedTableToolbar = (props) => {
+  const { numSelected, classes, value, handleSearch,error } = props;
 
-return(
-    <Toolbar
-      className={classNames(classes.root, {
-      })}
-    >
-      <div className={classes.title}>
-        {numSelected > 0
-          ? <Typography type="subheading">
-              {numSelected} selected
-            </Typography>
-          : <Typography type="title">Nutrition</Typography>}
-      </div>
-      <div className={classes.actions}>
-        
-              <TextField  placeholder="Search" onChange={handleSearch} value={value}/>
-              <IconButton aria-label="Filter list">
-                <FilterListIcon />
-              </IconButton>
+
+  
+
+  return (
+    <Grid>
+      <Grid item item container direction="row">
+        <Grid item xs={12} sm={9} >
+        <CustomerForm
+         
+         
+         />
+        </Grid> 
+
+        <Grid item xs={12} sm={3}>
+          <Box p={1} m={1} bgcolor="background.paper">
+            <form noValidate
+            onSubmit={e => { e.preventDefault(); } }
+            className={classes.form}
+            >
+
+            <TextField
+              variant="outlined"
+              // autoFocus
+              margin="dense"
+              // fullWidth
+              id="name"
+              name="search"
+              label="Search"
+              type="text"
+              helperText={error}
+              error={error  ? true : false}
+              color={classes.secondaryTwo}
+              className={classes.textField}
+              onChange={handleSearch}
+              value={value}
+            />
             
-      </div>
-    </Toolbar>
-)
-
-}
+            </form>
+            
+          </Box>
+        </Grid>
+      </Grid>
+    </Grid>
+  );
+};
 
 EnhancedTableToolbar.propTypes = {
-    classes: PropTypes.object.isRequired,
-    numSelected: PropTypes.number.isRequired,
-  };
+  classes: PropTypes.object.isRequired,
+  user: PropTypes.object.isRequired,
+  UI: PropTypes.object.isRequired,
+};
+const mapStateToProps = (state) => ({
+  user: state.user,
+  UI: state.UI,
+});
 
-export default withStyles(styles)(EnhancedTableToolbar)  
+export default connect(mapStateToProps)(
+  withStyles(styles)(EnhancedTableToolbar)
+);
