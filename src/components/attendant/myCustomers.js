@@ -2,15 +2,14 @@ import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { getAttendantData } from "../../redux/actions/userActions";
+import {getCustomer} from "../../redux/actions/dataActions"
 import Table from "../ui/table";
 import Loader from "../ui/loader";
 import Alert from "@material-ui/lab/Alert";
 import CustomerForm from "../ui/customerForm";
 
-class userProfile extends Component {
-  constructor() {
-    super();
-    this.state = {
+class myCustomers extends Component {
+ state = {
       phone: "",
       customerId: "",
       attendant: "",
@@ -19,31 +18,35 @@ class userProfile extends Component {
       vehicleCount: "",
       createdAt: "",
       errors: {},
-      columns: [
-        { title: "Name", field: "name" },
-        { title: "Email", field: "email" },
-        { title: "Phone", field: "phone" },
-        { title: "vehicles", field: "vehicleCount", type: "numeric" },
-      ],
+      customersData: [],
+      
     };
+  componentDidMount(){
+      this.props.getAttendantData(localStorage.username)
   }
 
-  componentDidMount() {
-    this.props.getAttendantData(this.props.user.username);
+
+  componentWillReceiveProps(nextProps){
+    if(nextProps.user){
+      this.setState({customersData: nextProps.user.credentials.customers})
+    }
+    if(nextProps.data.vehicle){
+      this.setState({customersData: nextProps.user.credentials.customers})
+    }
+ 
   }
 
   render() {
-    const { username, customers } = this.props.user.credentials;
-    console.log(customers);
+    const { username } = this.props.user.credentials;
     const loading = this.props.user.loading;
-    // console.log(loading)
+    const customers = this.state.customersData
+
     let customerMarkup = !loading ? (
       <Table customers={customers} />
     ) : (
       <Loader />
     );
     const { authenticated } = this.props.user;
-    // console.log(authenticated);
     return (
       <div className="main-panel" id="main-panel">
         <div className="panel-header panel-header-sm"></div>
@@ -68,9 +71,11 @@ class userProfile extends Component {
                                 {username} ! You have no customers — Please Add
                                
                               </Alert>
+                               <div className="container">
                                <CustomerForm
                                newCustomer={this.props.newCustomer}
                              />
+                               </div>
                              <br />
                             </Fragment>
                             )}
@@ -80,7 +85,13 @@ class userProfile extends Component {
                             <Loader />
                           </Fragment>
                         )}
+
+                        
+
                       </Fragment>
+
+
+
                     ) : (
                       <Fragment>
                         <Alert severity="warning">
@@ -97,11 +108,12 @@ class userProfile extends Component {
       </div>
     );
   }
-}
+} 
 
-userProfile.propTypes = {
+myCustomers.propTypes = {
   user: PropTypes.object.isRequired,
   data: PropTypes.object.isRequired,
+  getAttendantData: PropTypes.object.isRequired
 };
 
 const mapStateToProps = (state) => ({
@@ -109,4 +121,4 @@ const mapStateToProps = (state) => ({
   data: state.data,
 });
 
-export default connect(mapStateToProps, { getAttendantData })(userProfile);
+export default connect(mapStateToProps, { getAttendantData })(myCustomers);
