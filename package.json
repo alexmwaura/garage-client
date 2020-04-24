@@ -15,6 +15,7 @@
     "gulp": "^4.0.2",
     "http-proxy-middleware": "^1.0.3",
     "jwt-decode": "^2.2.0",
+    "keycode": "^2.2.0",
     "material-table": "^1.57.2",
     "material-ui-phone-number": "^2.2.6",
     "mui-datatables": "^2.14.0",
@@ -49,5 +50,5 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "https://us-central1-auto-garage-ea474.cloudfunctions.net/api/"
+  "proxy": "https://us-central1-auto-garage-ea474.cloudfunctions.net/api"
 }
