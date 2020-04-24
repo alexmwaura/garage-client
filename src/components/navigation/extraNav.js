@@ -11,7 +11,9 @@ class extraNav extends Component {
   handleLogout = () =>{
     this.props.logoutUser()
   }
+  
     render() {
+      const {username} = this.props
       const {authenticated} = this.props.user
         return (
           <nav className="navbar navbar-expand-lg navbar-transparent  bg-primary  navbar-absolute">
@@ -51,13 +53,13 @@ class extraNav extends Component {
                       </p>
                     </a>
                     <div className="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
-                      <a className="dropdown-item" href="/profile">My Customers</a>
+                      <a className="dropdown-item" href={`${username}/customers`}>My Customers</a>
                       <a className="dropdown-item" href="/" onClick={this.handleLogout} id="logout">Logout</a>
-                      <a className="dropdown-item" href="#">Something else here</a>
+                      {/* <a className="dropdown-item" href="/profile">Something else here</a> */}
                     </div>
                   </li>
                   <li className="nav-item">
-                    <a className="nav-link" href="#pablo">
+                    <a className="nav-link" href="/profile">
                       <i className="now-ui-icons users_single-02"></i>
                       <p>
                         <span className="d-lg-none d-md-block">Account</span>
