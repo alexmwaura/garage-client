@@ -6,10 +6,9 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  
 }
 .table-header th {
-  color: #916525 !important
+  color: #916525 !important;
 }
 
 a {
@@ -20,7 +19,7 @@ h4 {
   color: inherit;
 }
 
-.image{
+.image {
   margin: 0 auto -70px;
 }
 
@@ -85,25 +84,40 @@ select:-webkit-autofill:focus {
 }
 #add {
   outline: none;
+  margin-top: 7px;
   /* background: none; */
 }
-.common-table{
+.common-table {
   flex: 1;
   overflow: auto;
 }
 
-.dialog{
+.dialog {
   opacity: 9;
   overflow: inherit;
 }
-.dialog-body{
+.dialog-body {
   margin: 0;
   background-color: #422d0d;
-  background-image: url('./images/tire.jpg');
+  background-image: url("./images/garage.jpg");
   background-repeat: no-repeat;
   height: fit-content;
   overflow: auto;
 }
+
+.dialog2 {
+  opacity: 9;
+  overflow: inherit;
+}
+.dialog-body2 {
+  margin: 0;
+  background-color: #422d0d;
+  background-image: url("./images/gold2.jpg");
+  background-repeat: no-repeat;
+  height: 250vh;
+  overflow: auto;
+}
+
 
 #label {
   color: #827717;
@@ -122,6 +136,15 @@ select:-webkit-autofill:focus {
   /* height:281px; */
   width: fit-content;
   margin: 0 auto;
+}
+
+#search{
+  /* position: absolute; */
+  left: 0;
+  -webkit-transition: opacity 1s ease-in-out;
+  -moz-transition: opacity 1s ease-in-out;
+  -o-transition: opacity 1s ease-in-out;
+  transition: opacity 1s ease-in-out
 }
 
 #col {
@@ -151,10 +174,8 @@ select:-webkit-autofill:focus {
   }
 }
 
-.dialog{
+.dialog {
   display: outside;
-  
-  
 }
 
 #cf img.top {
