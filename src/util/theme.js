@@ -16,10 +16,10 @@ export default {
 
   spreadThese: {
     textField: {
-      margin: "10px auto 10px auto",
+      margin: "auto",
     },
     textFieldCustomer: {
-      margin: "10px 10px 10px auto"
+      margin: "auto"
     },
     button: {
       marginTop: 20,
