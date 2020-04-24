@@ -1,24 +1,18 @@
 import React, { Component, Fragment, useState } from "react";
 import Table from "@material-ui/core/Table";
-import TableBody from "@material-ui/core/TableBody";
-import TableCell from "@material-ui/core/TableCell";
-import TableHead from "@material-ui/core/TableHead";
-import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
-import MyButton from "../../util/MyButton";
 import withStyles from "@material-ui/core/styles/withStyles";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import VehicleDialog from "./vehicleDialog";
-import Box from "@material-ui/core/Box";
 import CustomerForm from "./customerForm";
-import TablePagination from "@material-ui/core/TablePagination";
 import TableContainer from "@material-ui/core/TableContainer";
+import CustomTable from "./tablePagination";
+import SearchComponent from "./EnhancedToolbar";
 
 const styles = (theme) => ({
   ...theme.spreadThese,
   root: {
-    width: "100%",
+    // width: "100%",
     marginTop: theme.spacing(3),
     overflowY: "auto",
     overflowX: "auto",
@@ -29,184 +23,90 @@ const styles = (theme) => ({
   },
 });
 
-const columns = [
-  { id: "name", label: "Name" },
-  { id: "phone", label: "Phone" },
-  {
-    id: "Email",
-    label: "Email",
-    format: (value) => value.toLocaleString(),
-  },
-  {
-    id: "vehicles",
-    label: "Vehicles",
-    format: (value) => value.toLocaleString(),
-  },
-];
-
-const TableData = (props) => {
-  const state = {
+class TableData extends Component {
+  state = {
     open: "none",
     disabled: false,
-    phone: "",
+    order: "g",
+    orderBy: "email",
+    selected: [],
+    searchValue: "",
+    data: this.props.customers,
+    filterData: this.props.data,
+    error: "",
   };
 
-  const componentWillReceiveProps = (nextProps) => {
+  componentWillReceiveProps = (nextProps) => {
     if (nextProps.UI.errors) {
       this.setState({ errors: nextProps.UI.errors });
     }
   };
 
-  const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(10);
+  onChange(event) {
+    this.setState({
+      searchValue: event.target.value,
+    });
+    console.log(this.state.searchValue);
+  }
 
-  const handleChangePage = (event, newPage) => {
-    setPage(newPage);
+
+  handleSearch = (event) => {
+    event.preventDefault();
+    let keyword = event.target.value;
+    this.setState({ searchValue: keyword });
+    if (this.state.searchValue.length < 0) {
+      this.setState({ error: "You have not searched anything" });
+      // return this.state.data;
+    } else {
+      const customData = this.state.data;
+      let finalData = customData.filter((data) => {
+        if (
+          data.name
+            .toLowerCase()
+            .includes(event.target.value.toLowerCase(), "g") ||
+          data.phone.includes(parseInt(event.target.value), "g") ||
+          data.email
+            .toLowerCase()
+            .includes(event.target.value.toLowerCase(), "g")
+        ) {
+          return data;
+        }
+      });
+
+      this.setState({
+        filterData: finalData,
+      });
+    }
   };
 
-  const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(+event.target.value);
-    setPage(0);
-  };
-
-  const { classes } = props;
-  let id = 0;
-  const data = props.customers;
-  const { username, userId } = props.user.credentials;
-
-  return (
-    <div className="container" >
-  
-
-      <Paper className={classes.root}>
-        <TableContainer>
-          <Table className="common-table">
-            <TableHead className="table-header">
-              <TableRow>
-                <TableCell align="justify"></TableCell>
-
-                <TableCell align="justify" padding="default">
-                  {" "}
-                  <Box
-                    component="div"
-                    display="inline"
-                    p={1}
-                    m={1}
-                    bgcolor="background.paper"
-                  ></Box>
-                </TableCell>
-                <TableCell align="justify" padding="default">
-                  <Box
-                    component="div"
-                    display="inline"
-                    p={1}
-                    m={1}
-                    bgcolor="background.paper"
-                  >
-                    Name
-                  </Box>
-                </TableCell>
-                <TableCell align="justify" padding="default">
-                  <Box
-                    component="div"
-                    display="inline"
-                    p={1}
-                    m={1}
-                    bgcolor="background.paper"
-                  >
-                    Phone
-                  </Box>
-                </TableCell>
-                <TableCell align="justify" padding="default">
-                  <Box
-                    component="div"
-                    display="inline"
-                    p={1}
-                    m={1}
-                    bgcolor="background.paper"
-                  >
-                    Email
-                  </Box>
-                </TableCell>
-                <TableCell align="center" padding="default">
-                  <Box
-                    component="div"
-                    display="center"
-                    p={1}
-                    m={1}
-                    bgcolor="background.paper"
-                  >
-                    vehicles
-                  </Box>
-                </TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody padding="default">
-              {data
-                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map(
-                  ({
-                    customerId,
-                    name,
-                    phone,
-                    email,
-                    vehicleCount,
-                    attendant,
-                    createdAt,
-                  }) => (
-                    <TableRow key={id}>
-                      <TableCell align="center">
-                        {username !== attendant ? (
-                          <Fragment />
-                        ) : (
-                          <VehicleDialog
-                            customerId={customerId}
-                            attendant={attendant}
-                            openDialog={props.openDialog}
-                            name={name}
-                            createdAt={createdAt}
-                            vehicleCount={vehicleCount}
-                            email={email}
-                          />
-                        )}
-                      </TableCell>
-
-                      <TableCell align="center" component="th" scope="row">
-                        {props.customers.length > id ? (id += 1) : id}
-                      </TableCell>
-
-                      <TableCell component="th" scope="row">
-                        {name}
-                      </TableCell>
-                      <TableCell component="th" scope="row" align="justify">
-                        {phone}
-                      </TableCell>
-                      <TableCell component="th" scope="row" align="justify">
-                        {email}
-                      </TableCell>
-                      <TableCell component="th" scope="row" align="center">
-                        {vehicleCount}
-                      </TableCell>
-                    </TableRow>
-                  )
-                )}
-            </TableBody>
-          </Table>
-        </TableContainer>
-        <TablePagination
-          rowsPerPageOptions={[5, 10, 15, 20]}
-          component="div"
-          count={data.length}
-          rowsPerPage={rowsPerPage}
-          page={page}
-          onChangePage={handleChangePage}
-          onChangeRowsPerPage={handleChangeRowsPerPage}
+  render() {
+    const { classes } = this.props;
+    let id = 0;
+    const { username, userId } = this.props.user.credentials;
+    const { filterData, order, orderBy, selected, data, error } = this.state;
+    // console.log(error + "error");
+    return (
+      <div className="container">
+        <SearchComponent
+          //  newCustomer={this.props.newCustomer}
+          handleSearch={this.handleSearch}
+          error={error}
+          value={this.searchValue}
         />
-      </Paper>
-      <br />
-    </div>
-  );
-};
+
+        <Paper className={classes.root}>
+          <CustomTable
+            filterData={filterData}
+            customers={data}
+            handleSearch={this.handleSearch}
+            // handleClick={this.handleClick(id,column)}
+            value={this.searchValue}
+          />
+        </Paper>
+      </div>
+    );
+  }
+}
 
 TableData.propTypes = {
   classes: PropTypes.object.isRequired,
@@ -219,4 +119,3 @@ const mapStateToProps = (state) => ({
 });
 
 export default connect(mapStateToProps)(withStyles(styles)(TableData));
-
