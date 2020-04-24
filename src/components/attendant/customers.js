@@ -1,49 +1,23 @@
 import React, { Component,Fragment } from "react";
-import axios from "axios";
-import { SET_ALL_CUSTOMERS } from "../../redux/types";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import Grid from "@material-ui/core/Grid";
 import { getAllCustomers } from "../../redux/actions/dataActions";
 import Table from "../ui/table";
 import Loader from "../ui/loader";
 import Alert from '@material-ui/lab/Alert';
-import SearchForm from '../../components/ui/search'
 
 
 export class customers extends Component {
-  constructor() {
-    super();
-    this.state = {
-      phone: "",
-      customerId: "",
-      attendant: "",
-      name: "",
-      email: "",
-      vehicleCount: "",
-      createdAt: "",
-      errors: {},
-      columns: [
-        { title: "Name", field: "name" },
-        { title: "Email", field: "email" },
-        { title: "Phone", field: "phone" },
-        { title: "vehicles", field: "vehicleCount" },
-      ],
-    };
-  }
-
+ 
   componentDidMount() {
     this.props.getAllCustomers();
   }
 
   render() {
-    const customerData = this.props.data.customers;
+    const customerData = this.props.customers;
     const loading = this.props.data.loading;
     let customerMarkup = !loading ? (
-      <Fragment>
-      <SearchForm customers={customerData} />
-      </Fragment>
-      
+      <Table customers={customerData} />
     ) : (
       <Loader />
     );
@@ -94,6 +68,7 @@ customers.propTypes = {
   user: PropTypes.object.isRequired,
   UI: PropTypes.object.isRequired,
   data: PropTypes.object.isRequired,
+  getAllCustomers: PropTypes.func.isRequired
 };
 const mapStateToProps = (state) => ({
   user: state.user,
