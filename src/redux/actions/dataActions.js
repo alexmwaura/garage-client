@@ -2,11 +2,15 @@ import {
   SET_ALL_CUSTOMERS,
   LOADING_DATA,
   CLEAR_ERRORS,
+  NEW_CUSTOMER,
   NEW_VEHICLE,
   SET_ERRORS,
   SET_CUSTOMER,
+  LOADING_UI,
 } from "../types";
 import axios from "axios";
+
+import {getAttendantData} from './userActions'
 
 export const getAllCustomers = () => (dispatch) => {
   dispatch({ type: LOADING_DATA });
@@ -25,7 +29,6 @@ export const getAllCustomers = () => (dispatch) => {
       });
     });
 };
-
 export const addVehicle = (
   vehicleData,
   customerId,
@@ -45,7 +48,7 @@ export const addVehicle = (
         type: NEW_VEHICLE,
         payload: res.data,
       });
-      dispatch(getCustomer(customerId));
+      
     })
     .catch((err) => {
       dispatch({
@@ -54,6 +57,7 @@ export const addVehicle = (
       });
     });
 };
+
 
 export const getCustomer = (customerId) => (dispatch) => {
   axios
@@ -66,9 +70,32 @@ export const getCustomer = (customerId) => (dispatch) => {
     })
     .catch((err) => {
       dispatch({
-        type: SET_CUSTOMER,
+        type: SET_ERRORS,
         payload: [],
       });
+    });
+};
+
+export const addCustomer = (customerData, userId) => (dispatch) => {
+  axios
+    .post(`/customer/${userId}`, customerData)
+    .then((res) => {
+      dispatch({
+        type: NEW_CUSTOMER,
+        payload: res.data,
+      });
+      console.log(res.data)
+
+
+    }).then(()=> {
+     window.location.reload()
+    })
+    .catch((err) => {
+      dispatch({
+        type: SET_ERRORS,
+        payload: err.response.data,
+      });
+      console.log(err.response);
     });
 };
 
