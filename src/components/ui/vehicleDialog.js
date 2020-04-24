@@ -90,8 +90,8 @@ class vehicleDialog extends Component {
     open: false,
     oldPath: "",
     newPath: "",
+    vehicleCount: this.props.vehicleCount,
   };
-
   componentDidMount() {
     if (this.props.openDialog) {
       this.handleOpen();
@@ -102,28 +102,17 @@ class vehicleDialog extends Component {
     if (nextProps.UI.errors) {
       this.setState({ errors: nextProps.UI.errors });
     }
-    if (nextProps.vehicle) {
-      this.setState({ vehicle: nextProps.vehicle.vehicleCount });
-    }
+
   }
 
-  state = {
-    open: false,
-    oldPath: "",
-    newPath: "",
-    vehicleCount: this.props.vehicleCount,
-  };
-  componentDidMount() {
-    if (this.props.openDialog) {
-      this.handleOpen();
-    }
-  }
   handleOpen = () => {
     this.setState({ open: true });
   };
+
   handleClose = () => {
     this.setState({ open: false });
     this.props.clearErrors();
+    
   };
   render() {
     const {
@@ -216,6 +205,7 @@ vehicleDialog.propTypes = {
   user: PropTypes.object.isRequired,
   data: PropTypes.object.isRequired,
   UI: PropTypes.object.isRequired,
+  // getAttendantData: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -226,6 +216,7 @@ const mapStateToProps = (state) => ({
 
 const mapActionsToProps = {
   clearErrors,
+  
 };
 
 export default connect(
