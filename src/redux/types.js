@@ -13,3 +13,5 @@ export const STOP_LOADING_UI = 'STOP_LOADING_UI';
 // Data reducer types
 export const SET_CUSTOMER = 'SET_CUSTOMER'
 export const NEW_VEHICLE = 'NEW_VEHICLE';
+export const NEW_CUSTOMER = 'NEW_CUSTOMER'
+export const LOADING_CUSTOMER = 'LOADING_CUSTOMER'
