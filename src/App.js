@@ -15,7 +15,8 @@ import attendant from "./pages/attendant";
 import axios from "axios";
 import jwtDecode from "jwt-decode";
 import { SET_AUTHENTICATED } from "./redux/types";
-import profile from "./components/attendant/myCustomers";
+import myCustomer from "./components/attendant/myCustomers";
+import profile from "./pages/profile"
 
 import { getAttendantData,logoutUser } from "./redux/actions/userActions";
 
@@ -38,21 +39,22 @@ const useStyles = makeStyles((theme) => ({
 const theme = createMuiTheme(themeObject);
 
 class App extends Component {
+  state= {
+    username: localStorage.username,
+    token: localStorage.FBIdToken,
+    role: localStorage.role
+  }
   componentDidMount() {
-    const token = localStorage.FBIdToken;
-    const username = localStorage.username;
-
-
-    if (token) {
-      const decodedToken = jwtDecode(token);
+    if (this.state.token && this.state.role === "attendant") {
+      const decodedToken = jwtDecode(this.state.token);
       if (decodedToken.exp * 1000 < Date.now()) {
         localStorage.clear();
         store.dispatch(logoutUser());
         window.location.href = "/";
       } else {
         store.dispatch({ type: SET_AUTHENTICATED });
-        axios.defaults.headers.common["Authorization"] = token;
-        store.dispatch(getAttendantData(username));
+        axios.defaults.headers.common["Authorization"] =this.state.token;
+        store.dispatch(getAttendantData(this.state.username));
       }
     }
   }
@@ -64,11 +66,15 @@ class App extends Component {
         <Provider store={store}>
           <div className="wrapper ">
             <Navbar />
-            <ExtraNav />
+            <ExtraNav 
+            username={this.state.username}
+            
+            />
           </div>
           <Router>
             <Switch>
               <Route exact path="/attendant" component={attendant} />
+              <Route exact path={`/${this.state.username}/customers`} component={myCustomer} />
               <Route exact path="/profile" component={profile} />
               <AuthRoute exact path="/" component={login} />
               <AuthRoute exact path="/login" component={login} />
