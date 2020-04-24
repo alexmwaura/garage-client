@@ -14,18 +14,30 @@ const styles = (theme) => ({
 
 class attendant extends Component {
 
+  constructor(){
+    super()
+    this.state = {
+      customers: []
+    }
+  }
+
+
   componentWillReceiveProps(nextProps) {
     if (nextProps.user.credentials) {
-      this.setState({ ...nextProps.user.credentials });
+      this.setState({ customers: nextProps.data.customers });
 
-      const { customers } = nextProps.user.credentials;
     }
   }
 
   render() {
+    const {customers} = this.state
+    console.log(customers)
     return (
       <div>
-        <Customers />
+        <Customers 
+        customers={customers}
+        
+        />
       </div>
     );
   }
@@ -33,10 +45,12 @@ class attendant extends Component {
 
 attendant.propTypes = {
   user: PropTypes.object.isRequired,
+  data: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   user: state.user,
+  data: state.data
 });
 
 export default connect(mapStateToProps)(withStyles(styles)(attendant));
