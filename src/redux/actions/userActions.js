@@ -31,7 +31,8 @@ export const loginUser = (userData, history) => (dispatch) => {
       if (account === "attendant") {
         const { username } = res.data;
         localStorage.setItem("username", username);
-        history.push("/attendant");
+        localStorage.setItem("role",account)
+        history.push(`/${username}/customers`)
         window.location.reload();
 
         const getUser = localStorage.username;
@@ -52,16 +53,20 @@ export const signupUser = (newUserData, history) => (dispatch) => {
   dispatch({ type: LOADING_UI });
   axios
     .post("/signup", newUserData)
-    .then((res) => {
+    .then(async(res) => {
       // console.log(res.data);
       setAuthorizationHeader(res.data.token);
       dispatch({ type: CLEAR_ERRORS });
       account = res.data.role;
       if (account === "attendant") {
-        const { username } = newUserData;
+        const { username,role } = newUserData;
         localStorage.setItem("username", username);
-        history.push("/attendant");
-        dispatch(getAttendantData(username));
+        localStorage.setItem("role", role);
+        history.push(`/${username}/customers`); 
+
+        window.location.reload();
+        const getUser = localStorage.username;
+        await dispatch(getAttendantData(getUser));
       }
     })
     .catch((err) => {
@@ -70,6 +75,16 @@ export const signupUser = (newUserData, history) => (dispatch) => {
         payload: err.response.data,
       });
     });
+};
+
+export const uploadImage = (formData, username) => (dispatch) => {
+  dispatch({ type: LOADING_USER });
+  axios
+    .post(`/user/image/${username}`, formData)
+    .then(() => {
+      dispatch(getAttendantData(username));
+    })
+    .catch((err) => console.log(err));
 };
 
 export const logoutUser = () => (dispatch) => {
@@ -93,4 +108,5 @@ export const getAttendantData = (username) => (dispatch) => {
     })
     .catch((err) => console.log(err));
 };
+
 
