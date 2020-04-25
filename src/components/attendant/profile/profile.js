@@ -5,63 +5,55 @@ import Button from "@material-ui/core/Button";
 import withStyles from "@material-ui/core/styles/withStyles";
 import CloudUploadIcon from "@material-ui/icons/CloudUpload";
 import { IconButton, Card, Tab } from "@material-ui/core";
-import { Link } from 'react-router-dom';
-import dayjs from 'dayjs';
+import { Link } from "react-router-dom";
+import dayjs from "dayjs";
 // import Grid from "@material-ui/core/Grid";
-import Box from "@material-ui/core/Box";
-import Typography from '@material-ui/core/Typography';
-import MuiLink from '@material-ui/core/Link';
-import Paper from '@material-ui/core/Paper';
+import Typography from "@material-ui/core/Typography";
+import Paper from "@material-ui/core/Paper";
 // Icons
-import DataUsageIcon from '@material-ui/icons/DataUsage';
-import LinkIcon from '@material-ui/icons/Link';
-import CalendarToday from '@material-ui/icons/CalendarToday';
-import EditIcon from '@material-ui/icons/Edit';
-import Loader from '../components/ui/loader'
-import KeyboardReturn from '@material-ui/icons/KeyboardReturn';
-import {uploadImage} from "../redux/actions/userActions"
+import DataUsageIcon from "@material-ui/icons/DataUsage";
+import LinkIcon from "@material-ui/icons/Link";
+import CalendarToday from "@material-ui/icons/CalendarToday";
+import Loader from "../ui/loader";
+import { uploadImage } from "../../../redux/actions/userActions";
 
-// import { getAllCustomers } from "../../redux/actions/dataActions";
-// import Table from "../ui/table";
-// import Loader from "../ui/loader";
-// import Alert from "@material-ui/lab/Alert";
 const styles = (theme) => ({
   ...theme.spreadThese,
   profile: {
-    '& .image-wrapper': {
-      textAlign: 'center',
-      position: 'relative',
-      '& button': {
-        position: 'absolute',
-        top: '80%',
-        left: '70%'
-      }
+    "& .image-wrapper": {
+      textAlign: "center",
+      position: "relative",
+      "& button": {
+        position: "absolute",
+        top: "80%",
+        left: "70%",
+      },
     },
-    '& .profile-image': {
+    "& .profile-image": {
       width: 200,
       height: 200,
-      objectFit: 'cover',
-      maxWidth: '100%',
-      borderRadius: '50%'
+      objectFit: "cover",
+      maxWidth: "100%",
+      borderRadius: "50%",
     },
-    '& .profile-details': {
-      textAlign: 'center',
-      '& span, svg': {
-        verticalAlign: 'middle'
+    "& .profile-details": {
+      textAlign: "center",
+      "& span, svg": {
+        verticalAlign: "middle",
       },
-      '& a': {
-        color: '#00bcd4'
-      }
+      "& a": {
+        color: "#00bcd4",
+      },
     },
-    '& hr': {
-      border: 'none',
-      margin: '0 0 10px 0'
+    "& hr": {
+      border: "none",
+      margin: "0 0 10px 0",
     },
-    '& svg.button': {
-      '&:hover': {
-        cursor: 'pointer'
-      }
-    }
+    "& svg.button": {
+      "&:hover": {
+        cursor: "pointer",
+      },
+    },
   },
 });
 export class profile extends Component {
@@ -80,29 +72,23 @@ export class profile extends Component {
     });
   };
 
-
   handleImageChange = (event) => {
     const image = event.target.files[0];
     const formData = new FormData();
-    formData.append('image', image, image.name);
-    console.log(formData)
-    this.props.uploadImage(formData,this.props.user.credentials.username);
+    formData.append("image", image, image.name);
+    console.log(formData);
+    this.props.uploadImage(formData, this.props.user.credentials.username);
   };
   handleEditPicture = () => {
-    const fileInput = document.getElementById('imageInput');
+    const fileInput = document.getElementById("imageInput");
     fileInput.click();
   };
 
   render() {
     const {
-      credentials: {imageUrl,
-        username,
-        email,
-        role,
-        createdAt,
-        customers},
+      credentials: { imageUrl, username, email, role, createdAt, customers },
       loading,
-      authenticated  
+      authenticated,
     } = this.props.user;
     const getLength = (obj) => {
       if (obj == null) return 0;
@@ -111,8 +97,6 @@ export class profile extends Component {
     };
     const { classes } = this.props;
     console.log(this.state.imageUrl);
-
-
 
     let profileMarkup = !loading ? (
       authenticated ? (
@@ -124,55 +108,42 @@ export class profile extends Component {
                 type="file"
                 id="imageInput"
                 hidden="hidden"
-                onChange={this.handleImageChange}              />
+                onChange={this.handleImageChange}
+              />
               <IconButton
                 tip="Edit profile picture"
                 id="add"
                 onClick={this.handleEditPicture}
-                        btnClassName="button"
               >
-                <EditIcon color="primary" />
+                <CloudUploadIcon color="primary" />
               </IconButton>
             </div>
             <hr />
             <div className="profile-details">
-             
-                <h5><a href={`/${username}/customers`}>@{username}</a></h5>
+              <h5>
+                <a href={`/${username}/customers`}>@{username}</a>
+              </h5>
               <hr />
               {role && <Typography variant="body2">{role}</Typography>}
               <hr />
               {getLength(customers) && (
                 <Fragment>
-                  <IconButton
-                  title="Total Customers"
-                  id="add"
-                  >
-                  <DataUsageIcon color="secondary" 
-                  
-                  
-                  /></IconButton>
-                   <span>{getLength(customers)}</span>
-                  
+                  <IconButton title="Total Customers" id="add">
+                    <DataUsageIcon color="secondary" />
+                  </IconButton>
+                  <span>{getLength(customers)}</span>
+
                   <hr />
                 </Fragment>
               )}
               {email && (
                 <Fragment>
-                  
-                  <LinkIcon color="secondary" 
-                  
-                  
-                  />
-                 
-                  
-                    {' '}
-                    {email}
-                 
+                  <LinkIcon color="secondary" /> {email}
                   <hr />
                 </Fragment>
               )}
-              <CalendarToday color="primary" />{' '}
-              <span>Joined {dayjs(createdAt).format('MMM YYYY')}</span>
+              <CalendarToday color="primary" />{" "}
+              <span>Joined {dayjs(createdAt).format("MMM YYYY")}</span>
             </div>
             {/* <MyButton tip="Logout" onClick={this.handleLogout}>
               <KeyboardReturn color="primary" />
@@ -206,7 +177,9 @@ export class profile extends Component {
         </Paper>
       )
     ) : (
-      <Fragment ><Loader/></Fragment>
+      <Fragment>
+        <Loader />
+      </Fragment>
     );
 
     return (
@@ -221,11 +194,7 @@ export class profile extends Component {
                   {/* <hr /> */}
                 </div>
                 <div className="card-body">
-                  <div className="table-responsive">
-
-                    {profileMarkup}
-
-                  </div>
+                  <div className="table-responsive">{profileMarkup}</div>
                 </div>
               </div>
             </div>
@@ -243,11 +212,14 @@ profile.propTypes = {
   uploadImage: PropTypes.func.isRequired,
 };
 
-const mapActionsToProps = {  uploadImage };
+const mapActionsToProps = { uploadImage };
 const mapStateToProps = (state) => ({
   user: state.user,
   UI: state.UI,
   data: state.data,
 });
 
-export default connect(mapStateToProps,mapActionsToProps)(withStyles(styles)(profile));
+export default connect(
+  mapStateToProps,
+  mapActionsToProps
+)(withStyles(styles)(profile));

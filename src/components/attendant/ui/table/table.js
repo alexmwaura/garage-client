@@ -4,7 +4,7 @@ import Paper from "@material-ui/core/Paper";
 import withStyles from "@material-ui/core/styles/withStyles";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import CustomerForm from "./customerForm";
+import CustomerForm from "../../customer/customerForm";
 import TableContainer from "@material-ui/core/TableContainer";
 import CustomTable from "./tablePagination";
 import SearchComponent from "./EnhancedToolbar";
@@ -48,7 +48,6 @@ class TableData extends Component {
     });
     console.log(this.state.searchValue);
   }
-
 
   handleSearch = (event) => {
     event.preventDefault();
@@ -99,7 +98,8 @@ class TableData extends Component {
             filterData={filterData}
             customers={data}
             handleSearch={this.handleSearch}
-            // handleClick={this.handleClick(id,column)}
+            username={username}
+            userId={userId}
             value={this.searchValue}
           />
         </Paper>

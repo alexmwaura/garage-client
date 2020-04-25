@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from "react";
-import { addVehicle } from "../../redux/actions/dataActions";
+import { addVehicle } from "../../../redux/actions/dataActions";
 import PropTypes from "prop-types";
 import withStyles from "@material-ui/core/styles/withStyles";
 import Grid from "@material-ui/core/Grid";
@@ -10,7 +10,7 @@ import { connect } from "react-redux";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import Box from "@material-ui/core/Box";
 import Alert from "@material-ui/lab/Alert";
-import NotificationDialog from './notificationDialog'
+import EditDialog from "../ui/edit/editDialog";
 
 const styles = (theme) => ({
   ...theme.spreadThese,
@@ -25,7 +25,7 @@ class Vehicle extends Component {
       engine: "",
       errors: {},
       loading: false,
-      vehicle: {}
+      vehicle: {},
     };
   }
 
@@ -34,7 +34,7 @@ class Vehicle extends Component {
       this.setState({ errors: nextProps.UI.errors, loading: false });
     }
     if (nextProps.data.vehicle) {
-      this.setState({ loading: false, vehicle: nextProps.data.vehicle });
+      this.setState({ loading: false, vehicle: nextProps.data.vehicle,model: nextProps.data.vehicle.model });
     }
   }
 
@@ -52,8 +52,8 @@ class Vehicle extends Component {
     this.props.addVehicle(
       vehicleData,
       this.props.customerId,
-      this.props.attendant,
-      this.props.name
+      // this.props.attendant,
+      // this.props.name
     );
   };
 
@@ -67,31 +67,34 @@ class Vehicle extends Component {
     const {
       classes,
       // UI: { loading },
-      customerId, attendant,name,email
+      customerId,
+      attendant,
+      name,
+      email,
+      phone,
     } = this.props;
     const { customer } = this.props.data;
     const errors = this.state.errors;
     const { vehicleCount } = customer;
-    const {vehicle} = this.state
+    const { vehicle,model } = this.state;
     return (
       <Fragment>
         {vehicleCount > this.props.vehicleCount ? (
           <Fragment>
             <Alert severity="success">
-              Successfully — Added {vehicle.model} for {name}{" "}
+              Successfully — Added {model} for {name}{" "}
             </Alert>
 
-            <NotificationDialog
-                          customerId={customerId}
-                          attendant={attendant}
-                          openDialog={this.props.openDialog}
-                          name={name}
-                          // createdAt={createdAt}
-                          vehicleCount={vehicleCount}
-                          email={email}
+            <EditDialog
+              customerId={customerId}
+              attendant={attendant}
+              openDialog={this.props.openDialog}
+              name={name}
+              phone={phone}
+              // createdAt={createdAt}
+              vehicleCount={vehicleCount}
+              email={email}
             />
-
-
           </Fragment>
         ) : (
           <form onSubmit={this.handleSubmit} className={classes.form}>

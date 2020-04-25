@@ -15,14 +15,21 @@ import attendant from "./pages/attendant";
 import axios from "axios";
 import jwtDecode from "jwt-decode";
 import { SET_AUTHENTICATED } from "./redux/types";
-import myCustomer from "./components/attendant/myCustomers";
-import profile from "./pages/profile"
+import myCustomer from "./components/attendant/customer/myCustomers";
+import profile from "./components/attendant/profile/profile";
+import { Redirect } from "react-router-dom";
 
-import { getAttendantData,logoutUser } from "./redux/actions/userActions";
+import { getAttendantData, logoutUser } from "./redux/actions/userActions";
 
 import { makeStyles } from "@material-ui/core/styles";
 // import Paper from "@material-ui/core/Paper";
 // import AppIcon from "./images/calltronix.jpg";
+
+
+
+axios.defaults.baseURL = 'https://us-central1-auto-garage-ea474.cloudfunctions.net/api'
+
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -39,11 +46,11 @@ const useStyles = makeStyles((theme) => ({
 const theme = createMuiTheme(themeObject);
 
 class App extends Component {
-  state= {
+  state = {
     username: localStorage.username,
     token: localStorage.FBIdToken,
-    role: localStorage.role
-  }
+    role: localStorage.role,
+  };
   componentDidMount() {
     if (this.state.token && this.state.role === "attendant") {
       const decodedToken = jwtDecode(this.state.token);
@@ -53,32 +60,35 @@ class App extends Component {
         window.location.href = "/";
       } else {
         store.dispatch({ type: SET_AUTHENTICATED });
-        axios.defaults.headers.common["Authorization"] =this.state.token;
+        axios.defaults.headers.common["Authorization"] = this.state.token;
         store.dispatch(getAttendantData(this.state.username));
       }
     }
   }
 
   render() {
+    const { username } = this.state;
     // const classes = useStyles();
     return (
       <MuiThemeProvider theme={theme}>
         <Provider store={store}>
           <div className="wrapper ">
             <Navbar />
-            <ExtraNav 
-            username={this.state.username}
-            
-            />
+            <ExtraNav username={this.state.username} />
           </div>
           <Router>
             <Switch>
               <Route exact path="/attendant" component={attendant} />
-              <Route exact path={`/${this.state.username}/customers`} component={myCustomer} />
+              <Route
+                exact
+                path={`/${this.state.username}/customers`}
+                component={myCustomer}
+              />
               <Route exact path="/profile" component={profile} />
               <AuthRoute exact path="/" component={login} />
               <AuthRoute exact path="/login" component={login} />
               <AuthRoute exact path="/signup" component={signup} />
+              <Redirect to={`/${username}/customers`} />
             </Switch>
           </Router>
         </Provider>

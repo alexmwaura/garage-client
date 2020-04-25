@@ -1,12 +1,12 @@
 import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import { getAttendantData } from "../../redux/actions/userActions";
-import {getCustomer} from "../../redux/actions/dataActions"
-import Table from "../ui/table";
+import { getAttendantData } from "../../../redux/actions/userActions";
+import {getCustomer} from "../../../redux/actions/dataActions"
+import Table from "../ui/table/table";
 import Loader from "../ui/loader";
 import Alert from "@material-ui/lab/Alert";
-import CustomerForm from "../ui/customerForm";
+import CustomerForm from "./customerForm";
 
 class myCustomers extends Component {
  state = {
@@ -55,7 +55,7 @@ class myCustomers extends Component {
             <div className="col-md-12" id="col">
               <div className="card">
                 <div className="card-header">
-                  <h4 className="card-title"> My Customers</h4>
+                  <h4 className="card-title"> {username} Customers</h4>
                 </div>
                 <div className="card-body">
                   <div className="table-responsive">

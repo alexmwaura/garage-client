@@ -104,6 +104,9 @@ select:-webkit-autofill:focus {
   height: fit-content;
   overflow: auto;
 }
+#head {
+  color: #838078;
+}
 
 .dialog2 {
   opacity: 9;
@@ -117,7 +120,6 @@ select:-webkit-autofill:focus {
   height: 250vh;
   overflow: auto;
 }
-
 
 #label {
   color: #827717;
@@ -138,13 +140,13 @@ select:-webkit-autofill:focus {
   margin: 0 auto;
 }
 
-#search{
+#search {
   /* position: absolute; */
   left: 0;
   -webkit-transition: opacity 1s ease-in-out;
   -moz-transition: opacity 1s ease-in-out;
   -o-transition: opacity 1s ease-in-out;
-  transition: opacity 1s ease-in-out
+  transition: opacity 1s ease-in-out;
 }
 
 #col {

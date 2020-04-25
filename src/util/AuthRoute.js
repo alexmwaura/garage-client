@@ -3,12 +3,13 @@ import { Route, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-
+const username = localStorage.username
+const role = localStorage.role
 const AuthRoute = ({ component: Component, authenticated, ...rest }) => (
   <Route
     {...rest}
     render={(props) =>
-      authenticated === true ? <Redirect to="/" /> : <Component {...props} />
+      authenticated === true && role === "attendant" ? <Redirect to={`/${username}/customers`} /> : <Component {...props} />
     }
   />
 );

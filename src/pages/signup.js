@@ -39,11 +39,6 @@ class signup extends Component {
       this.setState({ errors: nextProps.UI.errors });
     }
   }
-  // componentDidMount(nextProps){
-  //   if(nextProps.UI.errors){
-  //     this.setState({errors: nextProps.UI.errors })
-  //   }
-  // }
 
   handleSubmit = (event) => {
     event.preventDefault();
@@ -87,7 +82,7 @@ class signup extends Component {
                   <div className="card-body">
                     <div className="table-responsive">
                       <Grid container className={classes.form}>
-                        <Grid item sm={6}  id="cf">
+                        <Grid item sm={6} id="cf">
                           <div className={classes.image}>
                             <img
                               src={DownIcon}
@@ -229,7 +224,6 @@ class signup extends Component {
                               <Link to="/login">here</Link>
                             </small>
                             <br />
-                           
                           </form>
                         </Grid>
                       </Grid>

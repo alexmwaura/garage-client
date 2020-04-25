@@ -1,23 +1,19 @@
-import React, { Component, Fragment, useState } from "react";
+import React, { Fragment, useState } from "react";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
-import Paper from "@material-ui/core/Paper";
-import MyButton from "../../util/MyButton";
+
 import withStyles from "@material-ui/core/styles/withStyles";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import VehicleDialog from "./vehicleDialog";
-import NotificationDialog from "./notificationDialog";
-import EditIcon from '@material-ui/icons/Edit';
+import VehicleDialog from "../../vehicle/vehicleDialog";
+import EditDialog from "../edit/editDialog";
 
 import Box from "@material-ui/core/Box";
-import SearchComponent from "./EnhancedToolbar";
 import TablePagination from "@material-ui/core/TablePagination";
 import TableContainer from "@material-ui/core/TableContainer";
-import Grid from "@material-ui/core/Grid";
 
 const styles = (theme) => ({
   ...theme.spreadThese,
@@ -32,20 +28,14 @@ const styles = (theme) => ({
   },
 });
 
-
-
 const TableData = (props) => {
   const state = {
     open: "none",
     disabled: false,
     hover: true,
     phone: "",
-  };
-
-  const componentWillReceiveProps = (nextProps) => {
-    if (nextProps.UI.errors) {
-      this.setState({ errors: nextProps.UI.errors });
-    }
+    username: props.username,
+    userId: props.userId,
   };
 
   const [page, setPage] = useState(0);
@@ -55,10 +45,6 @@ const TableData = (props) => {
     setPage(newPage);
   };
 
-  const handleClick = (event) => {
-    console.log(event.target.value)
-  }
-
   const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(+event.target.value);
     setPage(0);
@@ -67,16 +53,15 @@ const TableData = (props) => {
   const { classes } = props;
   let id = 0;
   const data = props.customers;
-  const { username, userId } = props.user.credentials;
-  const { filterData, handleSearch, value } = props;
-  const {hover} = state
+  const { username, hover } = state;
+  const { filterData } = props;
   return (
     <TableContainer>
       <Table className={classes.table}>
         <TableHead className="table-header">
           <TableRow>
             <TableCell align="justify"></TableCell>
-          
+
             <TableCell align="justify" padding="default">
               <Box
                 component="div"
@@ -143,6 +128,32 @@ const TableData = (props) => {
                       {username !== attendant ? (
                         <Fragment />
                       ) : (
+                        <EditDialog
+                          customerId={customerId}
+                          attendant={attendant}
+                          openDialog={props.openDialog}
+                          name={name}
+                          createdAt={createdAt}
+                          vehicleCount={vehicleCount}
+                          email={email}
+                          phone={phone}
+                        />
+                      )}
+                    </TableCell>
+
+                    <TableCell component="th" scope="row">
+                      {name}
+                    </TableCell>
+                    <TableCell component="th" scope="row" align="justify">
+                      {phone.replace(/254/, "07")}
+                    </TableCell>
+                    <TableCell component="th" scope="row" align="justify">
+                      {email}
+                    </TableCell>
+                    <TableCell component="th" scope="row" align="center">
+                      {username !== attendant ? (
+                        <Fragment>{vehicleCount}</Fragment>
+                      ) : (
                         <VehicleDialog
                           customerId={customerId}
                           attendant={attendant}
@@ -151,36 +162,9 @@ const TableData = (props) => {
                           createdAt={createdAt}
                           vehicleCount={vehicleCount}
                           email={email}
+                          phone={phone}
                         />
                       )}
-                    </TableCell>
-                   
-                    <TableCell component="th" scope="row">
-                      {name}
-                    </TableCell>
-                    <TableCell component="th" scope="row" align="justify">
-                      {phone.replace(/254/,'07')}
-                    </TableCell>
-                    <TableCell component="th" scope="row" align="justify">
-                      {email}
-                    </TableCell>
-                    <TableCell component="th" scope="row" align="center">
-                      
-                    {username !== attendant ? (
-                        <Fragment />
-                      ) : (
-                        <NotificationDialog
-                          customerId={customerId}
-                          attendant={attendant}
-                          openDialog={props.openDialog}
-                          name={name}
-                          createdAt={createdAt}
-                          vehicleCount={vehicleCount}
-                          email={email}
-                          
-                        />
-                      )}
-                     
                     </TableCell>
                   </TableRow>
                 )
@@ -200,12 +184,36 @@ const TableData = (props) => {
                   attendant,
                   createdAt,
                 }) => (
-                  <TableRow key={customerId} 
-                  hover={hover}
-                  >
+                  <TableRow key={customerId} hover={hover}>
                     <TableCell align="center">
                       {username !== attendant ? (
                         <Fragment />
+                      ) : (
+                        <EditDialog
+                          customerId={customerId}
+                          attendant={attendant}
+                          openDialog={props.openDialog}
+                          name={name}
+                          createdAt={createdAt}
+                          vehicleCount={vehicleCount}
+                          email={email}
+                          phone={phone}
+                        />
+                      )}
+                    </TableCell>
+
+                    <TableCell component="th" scope="row">
+                      {name}
+                    </TableCell>
+                    <TableCell component="th" scope="row" align="justify">
+                      {phone.replace(/254/, "07")}
+                    </TableCell>
+                    <TableCell component="th" scope="row" align="justify">
+                      {email}
+                    </TableCell>
+                    <TableCell component="th" scope="row" align="center">
+                      {username !== attendant ? (
+                        <Fragment>{vehicleCount}</Fragment>
                       ) : (
                         <VehicleDialog
                           customerId={customerId}
@@ -215,36 +223,9 @@ const TableData = (props) => {
                           createdAt={createdAt}
                           vehicleCount={vehicleCount}
                           email={email}
+                          phone={phone}
                         />
                       )}
-                    </TableCell>
-
-                  
-                    <TableCell component="th" scope="row">
-                      {name}
-                    </TableCell>
-                    <TableCell component="th" scope="row" align="justify">
-                    {phone.replace(/254/,'07')}
-                    </TableCell>
-                    <TableCell component="th" scope="row" align="justify">
-                      {email}
-                    </TableCell>
-                    <TableCell component="th" scope="row" align="center">
-                    {username !== attendant ? (
-                        <Fragment />
-                      ) : (
-                        <NotificationDialog
-                        customerId={customerId}
-                        attendant={attendant}
-                        openDialog={props.openDialog}
-                        name={name}
-                        createdAt={createdAt}
-                        vehicleCount={vehicleCount}
-                        email={email}
-                       
-                        />
-                      )}
-                     
                     </TableCell>
                   </TableRow>
                 )
@@ -253,7 +234,7 @@ const TableData = (props) => {
         )}
       </Table>
       <TablePagination
-        rowsPerPageOptions={[3,4,5, 10, 15, 20, 100]}
+        rowsPerPageOptions={[3, 4, 5, 10, 15, 20, 100]}
         component="div"
         count={data.length}
         rowsPerPage={rowsPerPage}

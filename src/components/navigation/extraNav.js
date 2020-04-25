@@ -53,7 +53,7 @@ class extraNav extends Component {
                       </p>
                     </a>
                     <div className="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
-                      <a className="dropdown-item" href={`${username}/customers`}>My Customers</a>
+                      <a className="dropdown-item" href={`${username}/customers`}>{username} Customers</a>
                       <a className="dropdown-item" href="/" onClick={this.handleLogout} id="logout">Logout</a>
                       {/* <a className="dropdown-item" href="/profile">Something else here</a> */}
                     </div>

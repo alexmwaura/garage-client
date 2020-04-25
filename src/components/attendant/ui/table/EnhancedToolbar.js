@@ -1,12 +1,11 @@
 import React, { Component } from "react";
-import { render } from "react-dom";
 import PropTypes from "prop-types";
 import withStyles from "@material-ui/styles/withStyles";
 import TextField from "@material-ui/core/TextField";
 import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
 import { connect } from "react-redux";
-import CustomerForm from './customerForm'
+import CustomerForm from '../../customer/customerForm'
 
 const styles = (theme) => ({
   ...theme.spreadThese,

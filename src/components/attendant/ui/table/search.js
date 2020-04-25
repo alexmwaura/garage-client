@@ -5,7 +5,7 @@ import TextField from "@material-ui/core/TextField";
 import Table from "../ui/table";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import CustomerForm from "./customerForm";
+import CustomerForm from "../../customer/customerForm";
 import Grid from "@material-ui/core/Grid";
 
 const styles = (theme) => ({
@@ -41,10 +41,6 @@ class search extends Component {
 search.propTypes = {
   classes: PropTypes.object.isRequired,
 };
-//   const mapStateToProps = (state) => ({
-//     user: state.user,
-//     UI: state.UI,
-//     data: state.data,
-//   });
+
 
 export default withStyles(styles)(search);

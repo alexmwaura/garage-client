@@ -3,14 +3,13 @@ import PropTypes from "prop-types";
 import withStyles from "@material-ui/core/styles/withStyles";
 import Dialog from "@material-ui/core/Dialog";
 import DialogContent from "@material-ui/core/DialogContent";
-import CloseIcon from "@material-ui/icons/Close";
 import { connect } from "react-redux";
-import { clearErrors } from "../../redux/actions/dataActions";
-import Button from "@material-ui/core/Button";
-import { IconButton, Card, Tab } from "@material-ui/core";
+import { clearErrors } from "../../../redux/actions/dataActions";
+import IconButton from "@material-ui/core/IconButton";
 import Icon from "@material-ui/core/Icon";
 import VehicleForm from "./vehicleForm";
 import Slide from "@material-ui/core/Slide";
+import KeyboardReturn from "@material-ui/icons/KeyboardReturn";
 import VehicleTable from "./vehicleTable";
 
 const styles = (theme) => ({
@@ -102,7 +101,6 @@ class vehicleDialog extends Component {
     if (nextProps.UI.errors) {
       this.setState({ errors: nextProps.UI.errors });
     }
-
   }
 
   handleOpen = () => {
@@ -112,7 +110,6 @@ class vehicleDialog extends Component {
   handleClose = () => {
     this.setState({ open: false });
     this.props.clearErrors();
-    
   };
   render() {
     const {
@@ -123,11 +120,12 @@ class vehicleDialog extends Component {
       email,
       name,
       vehicleCount,
-      UI: { loading },
+      phone,
     } = this.props;
 
     return (
       <div className="container">
+        <span>{vehicleCount}</span>
         <IconButton
           variant="round"
           color="primary"
@@ -159,13 +157,14 @@ class vehicleDialog extends Component {
                       </div>
                       <div className="card-body">
                         <div className="table-responsive">
-                          <Button
+                          <IconButton
                             id="add"
                             tip="Close"
                             onClick={this.handleClose}
+                            color="secondary"
                           >
-                            <CloseIcon />
-                          </Button>
+                            <KeyboardReturn />
+                          </IconButton>
                           <DialogContent className={classes.dialogContent}>
                             <div className="container">
                               <VehicleTable
@@ -175,6 +174,7 @@ class vehicleDialog extends Component {
                                 name={name}
                                 vehicleCount={vehicleCount}
                                 email={email}
+                                phone={phone}
                               />
 
                               <VehicleForm
@@ -182,6 +182,8 @@ class vehicleDialog extends Component {
                                 customerId={customerId}
                                 createdAt={createdAt}
                                 name={name}
+                                email={email}
+                                phone={phone}
                                 vehicleCount={vehicleCount}
                               />
                             </div>
@@ -216,7 +218,6 @@ const mapStateToProps = (state) => ({
 
 const mapActionsToProps = {
   clearErrors,
-  
 };
 
 export default connect(

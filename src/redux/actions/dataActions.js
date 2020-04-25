@@ -10,7 +10,7 @@ import {
 } from "../types";
 import axios from "axios";
 
-import {getAttendantData} from './userActions'
+import { getAttendantData } from "./userActions";
 
 export const getAllCustomers = () => (dispatch) => {
   dispatch({ type: LOADING_DATA });
@@ -31,9 +31,9 @@ export const getAllCustomers = () => (dispatch) => {
 };
 export const addVehicle = (
   vehicleData,
-  customerId,
-  attendant,
-  customerName
+  customerId
+  // attendant,
+  // customerName
 ) => (dispatch) => {
   axios
     .post(`/customer/vehicle/${customerId}`, vehicleData)
@@ -48,7 +48,6 @@ export const addVehicle = (
         type: NEW_VEHICLE,
         payload: res.data,
       });
-      
     })
     .catch((err) => {
       dispatch({
@@ -57,7 +56,6 @@ export const addVehicle = (
       });
     });
 };
-
 
 export const getCustomer = (customerId) => (dispatch) => {
   axios
@@ -84,11 +82,10 @@ export const addCustomer = (customerData, userId) => (dispatch) => {
         type: NEW_CUSTOMER,
         payload: res.data,
       });
-      console.log(res.data)
-
-
-    }).then(()=> {
-     window.location.reload()
+      console.log(res.data);
+    })
+    .then(() => {
+      window.location.reload();
     })
     .catch((err) => {
       dispatch({

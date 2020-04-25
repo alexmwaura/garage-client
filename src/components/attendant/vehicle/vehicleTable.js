@@ -8,7 +8,7 @@ import Paper from "@material-ui/core/Paper";
 import withStyles from "@material-ui/core/styles/withStyles";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { getCustomer } from "../../redux/actions/dataActions";
+import { getCustomer } from "../../../redux/actions/dataActions";
 
 const styles = (theme) => ({
   ...theme.spreadThese,
@@ -34,19 +34,18 @@ class vehicleTable extends Component {
     if (nextProps.UI.errors) {
       this.setState({ errors: nextProps.UI.errors });
     }
-    if (nextProps.data.vehicle){
+    if (nextProps.data.vehicle) {
       this.props.getCustomer(this.props.customerId);
       this.setState({ vehicleCount: this.props.data.customer.vehicleCount });
     }
-    
   }
 
   render() {
     const {
       classes,
-      customerId,
-      createdAt,
-      attendant,
+      // customerId,
+      // createdAt,
+      // attendant,
       email,
       name,
       UI: { loading },
@@ -54,7 +53,10 @@ class vehicleTable extends Component {
 
     return (
       <Paper className={classes.root}>
-        <Table className={classes.table}>
+        <Table className={classes.table}
+        
+        
+        >
           <TableHead className="table-header">
             <TableRow>
               <TableCell align="justify">Email</TableCell>

@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from "react";
 import withStyles from "@material-ui/core/styles/withStyles";
 import PropTypes from "prop-types";
-import { clearErrors } from "../../redux/actions/dataActions";
+import { clearErrors } from "../../../redux/actions/dataActions";
 import { connect } from "react-redux";
 import { IconButton } from "@material-ui/core";
 import TextField from "@material-ui/core/TextField";
@@ -12,7 +12,7 @@ import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 import Grid from "@material-ui/core/Grid";
 import CheckIcon from "@material-ui/icons/Check";
-import { addCustomer } from "../../redux/actions/dataActions";
+import { addCustomer } from "../../../redux/actions/dataActions";
 import Typography from "@material-ui/core/Typography";
 
 const styles = (theme) => ({
