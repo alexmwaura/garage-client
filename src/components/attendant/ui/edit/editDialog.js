@@ -4,12 +4,12 @@ import withStyles from "@material-ui/core/styles/withStyles";
 import Dialog from "@material-ui/core/Dialog";
 import DialogContent from "@material-ui/core/DialogContent";
 import { connect } from "react-redux";
-import { clearErrors } from "../../../../redux/actions/dataActions";
+import { clearErrors,getMechanics } from "../../../../redux/actions/dataActions";
 import IconButton from "@material-ui/core/IconButton";
 import EditIcon from "@material-ui/icons/Edit";
 import CloseIcon from "@material-ui/icons/Close";
 import Slide from "@material-ui/core/Slide";
-import NotificationTable from "./editTable";
+import EditTable from "./editTable";
 import { getCustomer } from "../../../../redux/actions/dataActions";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
@@ -56,6 +56,7 @@ class editDialog extends Component {
     vehicleCount: this.props.vehicleCount,
     customerId: this.props.customerId,
     vehicles: {},
+    mechanics: [],
     filterData: this.props.data.customer.vehicles,
   };
 
@@ -99,11 +100,15 @@ class editDialog extends Component {
     if (nextProps.vehicle) {
       this.setState({ vehicle: nextProps.vehicle.vehicleCount });
     }
+    if (nextProps.data.mechanics){
+      this.setState({mechanics: nextProps.data.mechanics})
+    }
   }
 
   componentDidMount() {
     if (this.props.openDialog) {
       this.props.getCustomer(this.state.customerId);
+      this.props.getMechanics()
       this.handleOpen();
     }
   }
@@ -152,7 +157,7 @@ class editDialog extends Component {
       return lengthData;
     };
 
-    const { vehicles, filterData, hover, errors } = this.state;
+    const { vehicles, filterData, hover, errors,mechanics } = this.state;
 
     // vehicleMarkUp(customerId)
     return (
@@ -340,6 +345,7 @@ class editDialog extends Component {
                                           createdAt={createdAt}
                                           vehicleCount={vehicleCount}
                                           email={email}
+                                          mechanics={mechanics}
                                         />
                                         <Box display={this.state.edit}>
                                           <IconButton
@@ -356,12 +362,13 @@ class editDialog extends Component {
                               </Paper>
 
                               <TableContainer>
-                                <NotificationTable
+                                <EditTable
                                   vehicles={vehicles}
                                   hover={hover}
                                   filterData={filterData}
                                   handleSearch={this.handleSearch}
                                   value={this.searchValue}
+                                  mechanics={mechanics}
                                 />
                               </TableContainer>
                             </div>
@@ -386,6 +393,7 @@ editDialog.propTypes = {
   data: PropTypes.object.isRequired,
   UI: PropTypes.object.isRequired,
   getCustomer: PropTypes.func.isRequired,
+  getMechanics: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state) => ({
@@ -397,6 +405,7 @@ const mapStateToProps = (state) => ({
 const mapActionsToProps = {
   clearErrors,
   getCustomer,
+  getMechanics,
 };
 
 export default connect(

@@ -14,69 +14,17 @@ import VehicleTable from "./vehicleTable";
 
 const styles = (theme) => ({
   ...theme.spreadThese,
-  profileImage: {
-    maxWidth: 200,
-    height: 200,
-    borderRadius: "50%",
-    objectFit: "cover",
-  },
+
   dialogContent: {
     padding: 20,
-  },
-  closeButton: {
-    position: "absolute",
-    left: "90%",
-  },
-  expandButton: {
-    position: "absolute",
-    left: "90%",
-  },
-  spinnerDiv: {
-    textAlign: "center",
-    marginTop: 50,
-    marginBottom: 50,
-  },
-  card: {
-    maxWidth: 300,
-    margin: "auto",
-    transition: "0.3s",
-    boxShadow: "0 8px 40px -12px rgba(0,0,0,0.3)",
-    "&:hover": {
-      boxShadow: "0 16px 70px -12.125px rgba(0,0,0,0.3)",
-    },
-  },
-  media: {
-    paddingTop: "56.25%",
-  },
-  content: {
-    textAlign: "left",
-    padding: theme.spacing(3),
-  },
-  divider: {
-    margin: `${theme.spacing(3)}px 0`,
-  },
-  heading: {
-    fontWeight: "bold",
-  },
-  subheading: {
-    lineHeight: 1.8,
-  },
-  avatar: {
-    display: "inline-block",
-    border: "2px solid white",
-    "&:not(:first-of-type)": {
-      marginLeft: -theme.spacing(3),
-    },
   },
   root: {
     width: "100%",
     marginTop: theme.spacing(3),
-    overflowY: "auto",
     overflowX: "auto",
   },
   table: {
-    marginLeft: theme.spacing(2),
-    flex: 1,
+    minWidth: 700,
   },
 });
 
@@ -87,10 +35,10 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 class vehicleDialog extends Component {
   state = {
     open: false,
-    oldPath: "",
-    newPath: "",
     vehicleCount: this.props.vehicleCount,
+    errors: {},
   };
+
   componentDidMount() {
     if (this.props.openDialog) {
       this.handleOpen();
@@ -110,6 +58,7 @@ class vehicleDialog extends Component {
   handleClose = () => {
     this.setState({ open: false });
     this.props.clearErrors();
+    window.location.reload();
   };
   render() {
     const {
@@ -119,10 +68,9 @@ class vehicleDialog extends Component {
       attendant,
       email,
       name,
-      vehicleCount,
       phone,
     } = this.props;
-
+    const { vehicleCount } = this.state;
     return (
       <div className="container">
         <span>{vehicleCount}</span>
@@ -168,13 +116,10 @@ class vehicleDialog extends Component {
                           <DialogContent className={classes.dialogContent}>
                             <div className="container">
                               <VehicleTable
-                                attendant={attendant}
-                                customerId={customerId}
-                                createdAt={createdAt}
-                                name={name}
-                                vehicleCount={vehicleCount}
                                 email={email}
+                                name={name}
                                 phone={phone}
+                                vehicleCount={vehicleCount}
                               />
 
                               <VehicleForm
@@ -207,7 +152,6 @@ vehicleDialog.propTypes = {
   user: PropTypes.object.isRequired,
   data: PropTypes.object.isRequired,
   UI: PropTypes.object.isRequired,
-  // getAttendantData: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({

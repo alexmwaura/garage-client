@@ -35,7 +35,7 @@ class vehicleTable extends Component {
       this.setState({ errors: nextProps.UI.errors });
     }
     if (nextProps.data.vehicle) {
-      this.props.getCustomer(this.props.customerId);
+      // this.props.getCustomer(this.props.customerId);
       this.setState({ vehicleCount: this.props.data.customer.vehicleCount });
     }
   }

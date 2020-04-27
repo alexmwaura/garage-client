@@ -55,6 +55,13 @@ const TableData = (props) => {
   const data = props.customers;
   const { username, hover } = state;
   const { filterData } = props;
+  const getLength = ( obj) => {
+    if (obj == null) return 0;
+    const lengthData = Object.keys(obj).length;
+   
+    return lengthData
+  }
+ 
   return (
     <TableContainer>
       <Table className={classes.table}>

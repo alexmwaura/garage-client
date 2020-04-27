@@ -113,7 +113,7 @@ class myCustomers extends Component {
 myCustomers.propTypes = {
   user: PropTypes.object.isRequired,
   data: PropTypes.object.isRequired,
-  getAttendantData: PropTypes.object.isRequired
+  getAttendantData: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state) => ({

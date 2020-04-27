@@ -14,6 +14,7 @@ class nav extends Component {
 
   render() {
     const { authenticated,username } = this.props.user;
+    const role = localStorage.role
     return (
       <div className="sidebar" data-color="green">
         <div className="logo">

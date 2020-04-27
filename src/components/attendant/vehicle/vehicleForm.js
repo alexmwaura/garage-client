@@ -17,24 +17,35 @@ const styles = (theme) => ({
 });
 
 class Vehicle extends Component {
-  constructor() {
-    super();
-    this.state = {
+  
+    state = {
       registration: "",
+      display: "inline",
       model: "",
       engine: "",
       errors: {},
       loading: false,
       vehicle: {},
     };
-  }
+  
+
+
+
+
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.UI.errors) {
       this.setState({ errors: nextProps.UI.errors, loading: false });
     }
-    if (nextProps.data.vehicle) {
-      this.setState({ loading: false, vehicle: nextProps.data.vehicle,model: nextProps.data.vehicle.model });
+
+    const getLength = (obj) => {
+      return Object.keys(obj).length
+    }
+    console.log(getLength(nextProps.data.vehicle))
+
+    if (getLength(nextProps.data.vehicle)> 2) {
+      this.setState({ loading: false, vehicle: nextProps.data.vehicle,display: "none" });
+
     }
   }
 
@@ -52,7 +63,7 @@ class Vehicle extends Component {
     this.props.addVehicle(
       vehicleData,
       this.props.customerId,
-      // this.props.attendant,
+      this.props.attendant,
       // this.props.name
     );
   };
@@ -72,17 +83,25 @@ class Vehicle extends Component {
       name,
       email,
       phone,
+      
     } = this.props;
+    
     const { customer } = this.props.data;
     const errors = this.state.errors;
     const { vehicleCount } = customer;
-    const { vehicle,model } = this.state;
+    
+    const { vehicle,display } = this.state;
+    console.log(vehicle)
+    const getLength = (obj) => {
+      return Object.keys(obj).length
+    }
+    
     return (
       <Fragment>
-        {vehicleCount > this.props.vehicleCount ? (
+        {getLength(vehicle) > 2 ? (
           <Fragment>
             <Alert severity="success">
-              Successfully — Added {model} for {name}{" "}
+              Successfully — Added {vehicle.model} for {name}{" "}
             </Alert>
 
             <EditDialog
@@ -159,7 +178,9 @@ class Vehicle extends Component {
                   </Typography>
                 )}
                 <Grid item sm={12}>
-                  <Box p={1} m={1} bgcolor="background.paper">
+                  <Box p={1} m={1} bgcolor="background.paper"
+                  display={display}
+                  >
                     <Button
                       // variant="outlined"
                       type="submit"

@@ -9,9 +9,6 @@ import Alert from '@material-ui/lab/Alert';
 
 export class customers extends Component {
  
-  componentDidMount() {
-    this.props.getAllCustomers();
-  }
 
   render() {
     const customerData = this.props.customers;
