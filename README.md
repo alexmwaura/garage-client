@@ -14,8 +14,8 @@ Mechanic side is still under development
 
 ## ACCESSIBILITY AND USABILITY
 
-Attendant is able to add customer
-Attendant is able to add vehicle for his/her own customers
+Attendant is able to add customer <br>
+Attendant is able to add vehicle for his/her own customers <br>
 Attendant is able to notify mechanic of new vehicles
 
 
