@@ -5,12 +5,17 @@ import {
   SET_CUSTOMER,
   NEW_CUSTOMER,
   LOADING_CUSTOMER,
+  GET_MECHANICS,
+  CREATE_NOTIFICATION
+
 } from "../types";
 
 const initialState = {
   customers: [],
   customer: {},
   vehicle: {},
+  mechanics: [],
+  notification: [],
   loading: false,
 };
 export default function (state = initialState, action) {
@@ -26,6 +31,19 @@ export default function (state = initialState, action) {
         customers: action.payload,
         loading: false,
       };
+    case GET_MECHANICS:
+      return {
+        ...state,
+        mechanics: action.payload,
+        loading: false
+      }
+    case CREATE_NOTIFICATION:
+      return {
+        ...state,
+        notification: action.payload,
+        loading: true,
+      }    
+
 
     case NEW_VEHICLE:
       return {

@@ -12,7 +12,7 @@ import Box from "@material-ui/core/Box";
 import TablePagination from "@material-ui/core/TablePagination";
 import TableContainer from "@material-ui/core/TableContainer";
 import { Paper } from "@material-ui/core";
-import Notification from "../../notification/createNotification"
+import Notification from "../../notification/createNotification";
 
 const styles = (theme) => ({
   ...theme.spreadThese,
@@ -55,7 +55,7 @@ const NotificationTable = (props) => {
   };
   vehicleHandler();
 
-  const { classes, filterData, hover,mechanics } = props;
+  const { classes, filterData, hover, mechanics } = props;
 
   return (
     <Paper className={classes.root}>
@@ -133,7 +133,6 @@ const NotificationTable = (props) => {
                           vehicleId={vehicleId}
                           mechanics={mechanics}
                         />
-                        {vehicleId}
                       </Box>
                     </TableCell>
                   </TableRow>
@@ -143,7 +142,6 @@ const NotificationTable = (props) => {
             <TableBody padding="default">
               {
                 <Fragment>
-                  
                   {getLength(vehicles) > 0 ? (
                     vehicles
                       .slice(
@@ -156,29 +154,28 @@ const NotificationTable = (props) => {
                           <TableCell>{model}</TableCell>
                           <TableCell align="justify">{engine}</TableCell>
                           <TableCell align="justify">{registration}</TableCell>
-                          <TableCell align="center">{vehicleId}
-                          
-                          <Notification
-                          vehicleId={vehicleId}
-                          mechanics={mechanics}
-                        />
+                          <TableCell align="center">
+                            <Notification
+                              vehicleId={vehicleId}
+                              mechanics={mechanics}
+                            />
                           </TableCell>
-                        
                         </TableRow>
-                        
                       ))
                   ) : (
                     <Fragment>
-                        <Fragment>
-                           { getLength(vehicles) === 0 ? (<Fragment>Add vehicle</Fragment>):(<Loader/>)}
-                        </Fragment>
+                      <Fragment>
+                        {getLength(vehicles) === 0 ? (
+                          <Fragment>
+                            <Loader />
+                            Add vehicle
+                          </Fragment>
+                        ) : (
+                          <Loader />
+                        )}
+                      </Fragment>
                     </Fragment>
                   )}
-
-                   
-
-
-
                 </Fragment>
               }
             </TableBody>

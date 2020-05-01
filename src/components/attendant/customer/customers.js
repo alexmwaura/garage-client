@@ -19,7 +19,7 @@ export class customers extends Component {
       <Loader />
     );
     const {authenticated}= this.props.user  
-
+      console.log(customerData)
     return (
       <div className="main-panel" id="main-panel">
         <div className="panel-header panel-header-sm"></div>

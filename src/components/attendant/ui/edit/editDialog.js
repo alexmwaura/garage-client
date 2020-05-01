@@ -99,6 +99,7 @@ class editDialog extends Component {
     }
     if (nextProps.vehicle) {
       this.setState({ vehicle: nextProps.vehicle.vehicleCount });
+      this.props.getCustomer(this.state.customerId);
     }
     if (nextProps.data.mechanics){
       this.setState({mechanics: nextProps.data.mechanics})
@@ -158,7 +159,7 @@ class editDialog extends Component {
     };
 
     const { vehicles, filterData, hover, errors,mechanics } = this.state;
-
+    console.log(mechanics)  
     // vehicleMarkUp(customerId)
     return (
       <div className="container">

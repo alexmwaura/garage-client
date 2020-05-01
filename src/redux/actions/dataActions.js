@@ -7,38 +7,56 @@ import {
   SET_ERRORS,
   SET_CUSTOMER,
   LOADING_UI,
+  GET_MECHANICS,
 } from "../types";
 import axios from "axios";
 
 import { getAttendantData } from "./userActions";
 
-export const getAllCustomers = () => (dispatch) => {
+export const getMechanics = () => (dispatch) => {
   dispatch({ type: LOADING_DATA });
   axios
-    .get("/customers")
+    .get("/mechanics")
     .then((res) => {
       dispatch({
-        type: SET_ALL_CUSTOMERS,
+        type: GET_MECHANICS,
         payload: res.data,
+        loading: false,
       });
+      console.log(res.data);
     })
     .catch((err) => {
       dispatch({
-        type: SET_ALL_CUSTOMERS,
+        type: SET_ERRORS,
         payload: [],
       });
     });
 };
+
+export const getAllCustomers = () => (dispatch) => {
+  axios.get("/customers").then((res) => {
+    dispatch({
+      type: SET_ALL_CUSTOMERS,
+      payload: res.data,
+    });
+    console.log(res.data)
+  }).catch((err) => {
+    dispatch({
+      type: SET_ERRORS,
+      payload: [],
+    });
+  });
+};
 export const addVehicle = (
   vehicleData,
-  customerId
-  // attendant,
+  customerId,
+  attendant
   // customerName
 ) => (dispatch) => {
   axios
-    .post(`/customer/vehicle/${customerId}`, vehicleData)
+    .post(`/customer/vehicle/${customerId}/${attendant}`, vehicleData)
     .then((res) => {
-      if (res.data.registration === "Already exists") {
+      if (res.data.registration.trim() === "Already exists") {
         dispatch({
           type: SET_ERRORS,
           payload: res.data,
@@ -49,6 +67,8 @@ export const addVehicle = (
         payload: res.data,
       });
     })
+    //   dispatch(getAttendantData(localStorage.username))
+    // })
     .catch((err) => {
       dispatch({
         type: SET_ERRORS,
@@ -66,6 +86,7 @@ export const getCustomer = (customerId) => (dispatch) => {
         payload: res.data,
       });
     })
+    
     .catch((err) => {
       dispatch({
         type: SET_ERRORS,

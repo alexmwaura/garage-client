@@ -98,7 +98,7 @@ select:-webkit-autofill:focus {
 }
 .dialog-body {
   margin: 0;
-  background-color: #422d0d;
+  /* background-color: #ff9800; */
   background-image: url("./images/garage.jpg");
   background-repeat: no-repeat;
   height: fit-content;
@@ -114,8 +114,19 @@ select:-webkit-autofill:focus {
 }
 .dialog-body2 {
   margin: 0;
-  background-color: #422d0d;
+  background-color: #827717;
   background-image: url("./images/gold2.jpg");
+  background-repeat: no-repeat;
+  height: 250vh;
+  overflow: auto;
+}
+.dialog3 {
+  opacity: 9;
+  overflow: inherit;
+}
+.dialog-body3 {
+  margin: 0;
+  background-color: #2b1e0a;
   background-repeat: no-repeat;
   height: 250vh;
   overflow: auto;
@@ -207,3 +218,5 @@ select:-webkit-autofill:focus {
   background-color: black;
   color: black;
 }
+
+

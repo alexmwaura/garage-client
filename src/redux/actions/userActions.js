@@ -12,6 +12,7 @@ import {
 import Attendant from "../../pages/attendant";
 import axios from "axios";
 import React from "react";
+import { getAllCustomers } from "./dataActions";
 // let name;
 const setAuthorizationHeader = (token) => {
   const FBIdToken = `Bearer ${token}`;
@@ -36,7 +37,17 @@ export const loginUser = (userData, history) => (dispatch) => {
         window.location.reload();
 
         const getUser = localStorage.username;
-        await dispatch(getAttendantData(getUser));
+        await dispatch(getAttendantData(getUser))
+      }
+      if(account === "mechanic"){
+        const { username } = res.data;
+        console.log(res.data)
+        localStorage.setItem("username", username);
+        localStorage.setItem("role",account)
+        history.push("/attendant")
+        window.location.reload();
+
+        await dispatch(getAllCustomers());
       }
     })
     .catch((err) => {
@@ -67,6 +78,16 @@ export const signupUser = (newUserData, history) => (dispatch) => {
         window.location.reload();
         const getUser = localStorage.username;
         await dispatch(getAttendantData(getUser));
+      }
+      if(account === "mechanic"){
+        const { username,role } = newUserData;
+        console.log(res.data)
+        localStorage.setItem("username", username);
+        localStorage.setItem("role",role)
+        history.push("/attendant")
+        window.location.reload();
+
+        await dispatch(getAllCustomers());
       }
     })
     .catch((err) => {
@@ -110,3 +131,4 @@ export const getAttendantData = (username) => (dispatch) => {
 };
 
 
+// export const getMechanics = ()

@@ -1,11 +1,11 @@
-import React, { Component } from "react";
+import React, { Component,Fragment } from "react";
 import PropTypes from "prop-types";
 import withStyles from "@material-ui/styles/withStyles";
 import TextField from "@material-ui/core/TextField";
 import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
 import { connect } from "react-redux";
-import CustomerForm from '../../customer/customerForm'
+import CustomerForm from "../../customer/customerForm";
 
 const styles = (theme) => ({
   ...theme.spreadThese,
@@ -28,47 +28,44 @@ const styles = (theme) => ({
 });
 
 const EnhancedTableToolbar = (props) => {
-  const { numSelected, classes, value, handleSearch,error } = props;
+  const { numSelected, classes, value, handleSearch, error } = props;
 
-
-  
+  const { role } = localStorage;
+  console.log(role);
 
   return (
     <Grid>
       <Grid item item container direction="row">
-        <Grid item xs={12} sm={9} >
-        <CustomerForm
-         
-         
-         />
-        </Grid> 
+        <Grid item xs={12} sm={9}>
+          {role === "mechanic" ? <Fragment /> : <CustomerForm />}
+        </Grid>
 
         <Grid item xs={12} sm={3}>
           <Box p={1} m={1} bgcolor="background.paper">
-            <form noValidate
-            onSubmit={e => { e.preventDefault(); } }
-            className={classes.form}
+            <form
+              noValidate
+              onSubmit={(e) => {
+                e.preventDefault();
+              }}
+              className={classes.form}
             >
-
-            <TextField
-              variant="outlined"
-              // autoFocus
-              margin="dense"
-              // fullWidth
-              id="name"
-              name="search"
-              label="Search"
-              type="text"
-              helperText={error}
-              error={error  ? true : false}
-              color={classes.secondaryTwo}
-              className={classes.textField}
-              onChange={handleSearch}
-              value={value}
-            />
-            
+              <TextField
+                variant="outlined"
+                // autoFocus
+                margin="dense"
+                // fullWidth
+                id="name"
+                name="search"
+                label="Search"
+                type="text"
+                helperText={error}
+                error={error ? true : false}
+                color={classes.secondaryTwo}
+                className={classes.textField}
+                onChange={handleSearch}
+                value={value}
+              />
             </form>
-            
           </Box>
         </Grid>
       </Grid>
