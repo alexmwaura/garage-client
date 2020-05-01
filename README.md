@@ -13,10 +13,14 @@ N/B
 Mechanic side is still under development
 
 ## ACCESSIBILITY AND USABILITY
-
+Attendant and mechanic are able to signup, login and logout
 Attendant is able to add customer <br>
 Attendant is able to add vehicle for his/her own customers <br>
 Attendant is able to notify mechanic of new vehicles
+Attendants and Mechanics are able to change profile pictures
+Attendant is able to edit posted data
+Mechanic is able to get notification
+Mechanic will be able to send a bill to the customer charging the services for the vehicle
 
 
 ## DEMO
