@@ -1,4 +1,4 @@
-This project is the frontend for a full stack application with nodejs (firebase), redux
+This project is the frontend for a full stack application with ,react-redux and  nodejs using express servers for firebase.
 ## API BASE URL
 Add https://us-central1-auto-garage-ea474.cloudfunctions.net/api as the 'proxy' value in package.json
 
