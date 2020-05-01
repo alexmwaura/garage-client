@@ -16,10 +16,10 @@ Mechanic side is still under development
 Attendant and mechanic are able to signup, login and logout
 Attendant is able to add customer <br>
 Attendant is able to add vehicle for his/her own customers <br>
-Attendant is able to notify mechanic of new vehicles
-Attendants and Mechanics are able to change profile pictures
-Attendant is able to edit posted data
-Mechanic is able to get notification
+Attendant is able to notify mechanic of new vehicles <br>
+Attendants and Mechanics are able to change profile pictures <br>
+Attendant is able to edit posted data <br>
+Mechanic is able to get notification <br>
 Mechanic will be able to send a bill to the customer charging the services for the vehicle
 
 
