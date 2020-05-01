@@ -22,6 +22,10 @@ import { Redirect } from "react-router-dom";
 import { getAttendantData, logoutUser } from "./redux/actions/userActions";
 
 import { makeStyles } from "@material-ui/core/styles";
+
+
+import mechanic from "./pages/mechanic"
+import { getAllCustomers } from "./redux/actions/dataActions";
 // import Paper from "@material-ui/core/Paper";
 // import AppIcon from "./images/calltronix.jpg";
 
@@ -64,6 +68,19 @@ class App extends Component {
         store.dispatch(getAttendantData(this.state.username));
       }
     }
+    if (this.state.token && this.state.role === "mechanic") {
+      const decodedToken = jwtDecode(this.state.token);
+      if (decodedToken.exp * 1000 < Date.now()) {
+        localStorage.clear();
+        store.dispatch(logoutUser());
+        window.location.href = "/";
+      } else {
+        store.dispatch({ type: SET_AUTHENTICATED });
+        axios.defaults.headers.common["Authorization"] = this.state.token;
+        store.dispatch(getAllCustomers())
+        // store.dispatch(getAttendantData(this.state.username));
+      }
+    }
   }
 
   render() {
@@ -79,6 +96,7 @@ class App extends Component {
           <Router>
             <Switch>
               <Route exact path="/attendant" component={attendant} />
+              <Route exact path="/mechanic" component={mechanic} />
               <Route
                 exact
                 path={`/${this.state.username}/customers`}
